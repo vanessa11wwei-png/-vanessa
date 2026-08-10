@@ -112,230 +112,135 @@
         .breathe-4 { animation: gentle-breathe 7.5s ease-in-out infinite 1.5s; }
 
         /* ============================================================
-           📱 移动端适配补丁（新增）
-           说明：原页面里大量使用了固定像素宽度（如 1320px/1200px）
-           和绝对定位的装饰性 3D 元素，在手机窄屏上会导致内容溢出、
-           被裁切或错位。以下规则仅在 768px 及以下屏幕生效，
-           不影响电脑端原有的视觉效果。
+           📱 Apple 级移动端排版重构 (Apple-Style Mobile Layout)
+           核心原则：边缘延伸(Edge-to-edge)、呼吸感留白(Whitespace)、
+           水平滚动(Horizontal Scroll)、大字体(Bold Typography)
            ============================================================ */
         @media (max-width: 768px) {
+            /* --- 1. 全局重置与字体排印 (Typography & Body) --- */
+            html, body { overflow-x: hidden; width: 100%; -webkit-text-size-adjust: 100%; }
+            
+            h2, .serif-title.text-\[56px\], .serif-title.text-\[72px\], h2.text-\[80px\] { 
+                font-size: 36px !important; line-height: 1.2 !important; letter-spacing: -0.01em !important; 
+            }
+            h3 { font-size: 24px !important; line-height: 1.3 !important; letter-spacing: 0 !important; }
+            p { font-size: 15px !important; line-height: 1.6 !important; }
+            #hero-title span.text-\[64px\], #hero-title span.md\:text-\[96px\] { font-size: 48px !important; }
+            
+            /* --- 2. 统一视线节奏 (Unified Spacing) --- */
+            .px-8, .px-10, .px-\[40px\], .px-\[80px\], .px-12, .px-24, .px-6 { padding-left: 20px !important; padding-right: 20px !important; }
+            .pt-32, .pt-40, .pt-48, .py-40, .py-\[64px\] { padding-top: 64px !important; }
+            .pb-32, .pb-40, .pb-48, .pb-56, .pb-64, .pb-80 { padding-bottom: 64px !important; }
+            .mt-32, .mt-40, .mt-48, .mt-56 { margin-top: 64px !important; }
+            .mb-32, .mb-40, .mb-48, .mb-56, .mb-\[64px\], .mb-\[150px\] { margin-bottom: 48px !important; }
+            .gap-12, .gap-16, .gap-20, .gap-24 { gap: 24px !important; }
+            
+            /* 强制释放固定宽度限制 */
+            .w-\[1400px\], .w-\[1360px\], .w-\[1320px\], .w-\[1300px\], .w-\[1240px\], .w-\[1200px\], .w-\[1100px\], .w-\[1080px\], .w-\[1000px\], .w-\[850px\], .w-\[800px\], .w-\[700px\], .w-\[680px\], .w-\[620px\], .w-\[600px\], .w-\[500px\], .w-\[460px\], .w-\[420px\], .w-\[400px\] {
+                width: 100% !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important;
+            }
 
-          html, body { overflow-x: hidden; width: 100%; }
+            /* --- 3. Hero 首屏 (沉浸式居中排版) --- */
+            #cover { min-height: 100vh !important; padding: 100px 20px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+            #hero-meta, #hero-title, #hero-portfolio-banner { position: relative !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; margin: 0 !important; width: 100% !important; transform: none !important; }
+            #hero-meta { margin-bottom: 48px !important; align-items: center !important; text-align: center !important; }
+            #hero-title { align-items: center !important; margin-bottom: 48px !important; text-align: center; }
+            #hero-title .flex.items-baseline { flex-direction: column; align-items: center; gap: 12px !important; }
+            #hero-title .flex.items-center { flex-direction: column; gap: 16px !important; margin: 0 !important; }
+            #hero-portfolio-banner { height: auto !important; padding: 32px 20px !important; justify-content: center !important; border-radius: 24px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.06) !important; margin-top: auto !important; border: none !important; }
+            #hero-portfolio-banner h1 { font-size: 14vw !important; text-align: center; }
+            #hero-tagline, #hero-black-bar { display: none !important; }
 
-          /* ---- 内容容器：从固定像素宽度改为流体宽度 ---- */
-          .logic-white-box {
-            width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            border-radius: 28px !important;
-            padding-bottom: 100px !important;
-          }
-          .visual-deep-box {
-            width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            border-radius: 28px !important;
-            padding-top: 200px !important;
-            padding-bottom: 80px !important;
-          }
-          .p3-giant-card { border-radius: 28px !important; }
+            /* --- 4. About 个人信息 (左对齐流式排版) --- */
+            #about { padding-top: 80px !important; padding-bottom: 80px !important; }
+            #about > div:first-child { flex-direction: column !important; }
+            #about .lg\:w-1\/2 { width: 100% !important; align-items: flex-start !important; }
+            #about .text-right { text-align: left !important; }
+            #about .w-\[280px\] { width: 100% !important; max-width: none !important; aspect-ratio: 4/5 !important; margin: 32px 0 !important; border-radius: 20px; border: none !important; padding: 0 !important; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+            #about .flex-row.gap-16 { flex-direction: column !important; gap: 40px !important; }
 
-          /* Tailwind 内联的固定宽度类（w-[XXXpx]）在移动端强制改为100% */
-          .w-\[1400px\], .w-\[1360px\], .w-\[1320px\], .w-\[1300px\],
-          .w-\[1240px\], .w-\[1200px\], .w-\[1100px\], .w-\[1080px\],
-          .w-\[1000px\], .w-\[850px\], .w-\[800px\], .w-\[700px\],
-          .w-\[680px\], .w-\[620px\], .w-\[600px\], .w-\[500px\],
-          .w-\[460px\], .w-\[420px\], .w-\[400px\] {
-            width: 100% !important;
-          }
+            /* --- 5. 核心板块容器 (无边框延伸 Edge-to-Edge) --- */
+            .logic-white-box { border-radius: 0 0 40px 40px !important; padding-top: 80px !important; padding-bottom: 64px !important; box-shadow: none !important; border-bottom: 1px solid rgba(0,0,0,0.05) !important; margin-top: 0 !important; }
+            .visual-deep-box { border-radius: 0 !important; padding: 64px 20px !important; margin-top: 0 !important; }
+            .p3-giant-card { border-radius: 0 !important; border: none !important; box-shadow: none !important; border-bottom: 1px solid rgba(0,0,0,0.05) !important; }
+            .project-02-wrapper { margin-top: 0 !important; padding-top: 64px !important; border-radius: 0 !important; }
 
-          /* ---- 纯装饰性元素：手机上直接隐藏，避免遮挡/溢出正文 ---- */
-          .ghost-bg-text,               /* 巨大水印文字 */
-          .mockup-iphone-standard,      /* 漂浮的重复展示用手机模型 */
-          .prompt-code-overlay,         /* 装饰性代码浮层 */
-          .hand-drawn-circle,           /* 手绘圆圈装饰线 */
-          .perspective-grid-wrapper {   /* 3D 地板网格背景 */
-            display: none !important;
-          }
+            /* 内部卡片圆角统一 */
+            .challenge-card, .bg-white.rounded-\[32px\], .bg-\[\#F8F8FA\].rounded-\[32px\], .strategy-card { padding: 32px 24px !important; border-radius: 24px !important; }
+            .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr !important; gap: 24px !important; }
+            
+            /* --- 6. 苹果风图像重组 (堆叠取代隐藏) --- */
+            /* 将原本绝对定位的手机模型改为文档流内的优雅堆叠 */
+            .mockup-iphone-standard { position: relative !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 48px auto !important; width: 75% !important; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.2)) !important; z-index: 10 !important; transform: none !important; }
+            .mockup-macbook-breakout { width: calc(100% + 40px) !important; margin-left: -20px !important; border-radius: 0 !important; border-left: none !important; border-right: none !important; }
+            .billboard-vignette { width: calc(100% + 40px) !important; margin-left: -20px !important; border-radius: 0 !important; }
+            .pos-left-top-cross, .pos-right-bottom-cross { transform: none !important; }
+            .visual-deep-box > div.relative.w-\[1200px\] { flex-direction: column; align-items: center; margin-top: 0 !important; }
 
-          /* ---- 侨智大会板块：3D 等距手机矩阵改为可滚动的紧凑排列 ---- */
-          .isometric-viewport {
-            height: auto !important;
-            min-height: 0 !important;
-            padding: 40px 0 !important;
-            overflow-x: auto !important;
-          }
-          .phone-matrix-grid {
-            transform: scale(0.32) !important;
-            margin: 0 auto !important;
-            gap: 40px !important;
-          }
+            /* --- 7. 水平滑动交互 (Horizontal Snap Scrolling) --- */
+            /* P3 3D手机矩阵 -> 苹果风水平画廊 */
+            .isometric-viewport { height: auto !important; padding: 24px 0 !important; overflow-x: auto !important; scroll-snap-type: x mandatory; margin: 0 -20px !important; width: calc(100% + 40px) !important; -webkit-overflow-scrolling: touch; }
+            .isometric-viewport::-webkit-scrollbar { display: none; }
+            .phone-matrix-grid { transform: none !important; margin: 0 !important; display: flex !important; flex-direction: row !important; gap: 24px !important; padding: 20px !important; }
+            .iso-column { transform: none !important; display: flex !important; flex-direction: row !important; gap: 24px !important; padding-top: 0 !important; }
+            .hw-iphone-pro { transform: none !important; flex: 0 0 240px !important; height: 500px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; scroll-snap-align: center; border-radius: 36px !important; }
+            .hw-iphone-pro:hover { transform: none !important; }
+            
+            /* P3 底部数据卡片 -> 水平画廊 */
+            .p3-container .max-w-\[1200px\].mx-auto.px-10.py-\[64px\] { padding: 40px 0 !important; margin: 0 -20px !important; width: calc(100% + 40px) !important; overflow-x: auto !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+            .p3-container .max-w-\[1200px\].mx-auto.px-10.py-\[64px\]::-webkit-scrollbar { display: none; }
+            .p3-container .grid.divide-x { display: flex !important; flex-direction: row !important; border: none !important; gap: 16px !important; padding: 0 20px !important; width: max-content !important; }
+            .p3-container .divide-x > div { border: 1px solid rgba(0,0,0,0.05) !important; border-radius: 20px; padding: 32px 24px !important; flex: 0 0 260px !important; scroll-snap-align: center; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
 
-          /* ---- MacBook / iPhone 展示模块：宽度跟随容器 ---- */
-          .mockup-macbook-breakout { border-radius: 16px !important; }
+            /* --- 8. Branding 包装板块微调 --- */
+            .branding-module-wrapper img[alt="水印左"], .branding-module-wrapper img[alt="水印右"], .branding-module-wrapper img[alt="水印中"] { display: none !important; }
+            .editorial-row { flex-direction: column !important; gap: 40px !important; }
+            .col-rational, .col-emotional { width: 100% !important; padding: 0 !important; }
+            .col-emotional .w-\[120\%\], .col-emotional .w-\[130\%\] { width: calc(100% + 40px) !important; margin-left: -20px !important; }
+            .branding-module-wrapper .flex.gap-10 { gap: 16px !important; flex-wrap: wrap; justify-content: center; }
+            
+            /* 结构解剖图改为单列堆叠 */
+            .branding-module-wrapper .grid-cols-2.lg\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 64px !important; }
+            .dramatic-physics-shadow { width: 80% !important; }
+            
+            /* 包装小图 2x2 网格 */
+            .w-full.mt-40.pt-32.border-t { padding-top: 48px !important; display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+            .w-full.mt-40.pt-32.border-t > div.w-\[20\%\] { width: 100% !important; margin: 0 !important; }
 
-          /* ---- 大字号水印/数字装饰缩小，避免撑破容器 ---- */
-          .card-number { font-size: 32px !important; top: 16px !important; right: 16px !important; }
+            /* --- 9. 隐藏纯视觉干扰元素 (Noise Reduction) --- */
+            .ghost-bg-text, .hand-drawn-circle, .prompt-code-overlay, .perspective-grid-wrapper, .soul-line-dashed-connector, .soul-line-solid-top, .transition-node { display: none !important; }
 
-          /* ---- 品牌板块巨型水印马头图案缩小 ---- */
-          .branding-module-wrapper img[alt="水印左"],
-          .branding-module-wrapper img[alt="水印右"] { display: none !important; }
+            /* --- 10. Footer 底部 (左对齐清晰层级) --- */
+            footer { padding-top: 80px !important; }
+            footer h2 { font-size: 56px !important; margin-bottom: 16px !important; }
+            footer .grid-cols-1.md\:grid-cols-2 { gap: 56px !important; }
+            footer .items-end { align-items: flex-start !important; }
+            footer .justify-end { justify-content: flex-start !important; }
+            footer .flex-col.md\:flex-row { flex-direction: column !important; align-items: flex-start !important; gap: 32px !important; }
 
-          /* ============================================================
-             第二轮修复：导航栏、排版与视觉细节优化
-             ============================================================ */
+            /* --- 11. iOS 灵动岛风格底部导航栏 --- */
+            #main-nav {
+                display: flex !important;
+                top: auto !important;
+                bottom: 24px !important;
+                width: calc(100% - 32px) !important;
+                padding: 14px 20px !important;
+                border-radius: 100px !important;
+                background: rgba(255, 255, 255, 0.85) !important;
+                backdrop-filter: blur(20px) saturate(180%) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+                border: 1px solid rgba(0,0,0,0.05) !important;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+            }
+            #main-nav > div { gap: 24px !important; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0px; justify-content: flex-start !important; }
+            #main-nav > div::-webkit-scrollbar { display: none; }
+            #main-nav .nav-link { font-size: 13px !important; font-weight: 600 !important; color: #000 !important; opacity: 0.6; padding: 4px 0 !important; }
+            #main-nav .nav-link:active { opacity: 1; }
 
-          /* ---- 悬浮导航栏：手机改为底部悬浮，允许横向滚动 ---- */
-          #main-nav {
-              display: flex !important;
-              top: auto !important;
-              bottom: 24px !important;
-              width: 90% !important;
-              max-width: 400px;
-              padding: 12px 20px !important;
-              border-radius: 24px !important;
-              background: rgba(255, 255, 255, 0.95) !important;
-          }
-          #main-nav > div {
-              gap: 16px !important;
-              overflow-x: auto;
-              -webkit-overflow-scrolling: touch;
-              padding-bottom: 2px;
-          }
-          #main-nav > div::-webkit-scrollbar { display: none; }
-          #main-nav .nav-link { font-size: 11px !important; white-space: nowrap; }
-
-          /* ---- 碎暖小图排版：手机端两两并排 ---- */
-          .w-\[20\%\] { width: 45% !important; margin-bottom: 16px; }
-
-          /* ---- 首屏 HERO：原设计靠绝对定位+百分比叠放做杂志排版，
-                 窄屏上会导致标题与副标题文字重叠，改为正常纵向堆叠 ---- */
-          #cover {
-            height: auto !important;
-            min-height: 0 !important;
-            padding: 110px 24px 32px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 28px !important;
-          }
-          #hero-tagline, #hero-black-bar { display: none !important; }
-          #hero-meta, #hero-title, #hero-portfolio-banner {
-            position: static !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            left: auto !important;
-            right: auto !important;
-            top: auto !important;
-            bottom: auto !important;
-            margin: 0 !important;
-            transform: none !important;
-          }
-          #hero-title span { font-size: 44px !important; }
-          #hero-portfolio-banner {
-            height: auto !important;
-            padding: 20px !important;
-            justify-content: center !important;
-          }
-          #hero-portfolio-banner h1 { font-size: 18vw !important; text-align: center; }
-
-          /* ---- 大量固定像素高度的装饰性容器：手机上改为更矮的固定高度，
-                 避免内容没填满导致大片空白（不用 auto，否则内部绝对定位
-                 元素会因为父容器高度塌陷而错位） ---- */
-          .h-\[1200px\] { height: 640px !important; }
-          .h-\[800px\]  { height: 380px !important; }
-          .h-\[700px\]  { height: 340px !important; }
-          .h-\[600px\]  { height: 320px !important; }
-          .h-\[500px\]  { height: 280px !important; }
-          .h-\[450px\]  { height: 260px !important; }
-
-          /* ---- visual-deep-box：桌面端用负边距把上面的白色卡片"吃进"
-                 深色背景里做叠层效果，手机上负边距会撑出大片空白，改为
-                 正常衔接 ---- */
-          .visual-deep-box {
-            margin-top: 0 !important;
-            padding-top: 60px !important;
-            padding-bottom: 60px !important;
-          }
-
-          /* ---- 品牌板块"从图腾到造物"标题区：桌面端用 380px 顶部间距
-                 给上方水印图腾留位置，手机上水印已隐藏，间距缩小 ---- */
-          .mt-\[380px\] { margin-top: 60px !important; }
-
-          /* ---- AIGC 光影中国板块顶部间距，桌面 240px 起步偏大 ---- */
-          .project-02-wrapper { margin-top: 40px !important; padding-top: 80px !important; }
-
-          /* ============================================================
-             第三轮优化：资深设计师级排版微调 (留白、比例、字号节奏)
-             ============================================================ */
-
-          /* ---- 🍎 文字比例与节奏 (Typography Scale) ---- */
-          /* 收敛过大的桌面端标题字号，杜绝手机端单字断行 */
-          h2 { font-size: 32px !important; line-height: 1.3 !important; }
-          h3 { font-size: 22px !important; line-height: 1.4 !important; }
-          .serif-title.text-\[56px\], .serif-title.text-\[72px\], h2.text-\[80px\] { font-size: 36px !important; }
-          #hero-title span.text-\[64px\], #hero-title span.md\:text-\[96px\] { font-size: 44px !important; }
-          /* Footer 底部巨型字体限制 */
-          footer h2.text-\[64px\] { font-size: 48px !important; margin-bottom: 16px !important; }
-          footer p.text-\[20px\] { font-size: 16px !important; }
-
-          /* ---- 🌬️ 呼吸感与间距压缩 (Spacing & Rhythm) ---- */
-          /* 将桌面端巨型间距统一压缩，防止视线断层 */
-          .pt-32, .pt-40, .pt-48 { padding-top: 56px !important; }
-          .pb-32, .pb-40, .pb-48, .pb-56, .pb-64, .pb-80 { padding-bottom: 56px !important; }
-          .mt-32, .mt-40, .mt-48, .mt-56 { margin-top: 56px !important; }
-          .mb-32, .mb-40, .mb-48, .mb-56 { margin-bottom: 48px !important; }
-          .gap-12, .gap-16, .gap-20, .gap-24 { gap: 24px !important; }
-
-          /* ---- 📦 卡片与容器内边距精细化 ---- */
-          .px-8, .px-10, .px-\[40px\], .px-\[80px\] { padding-left: 20px !important; padding-right: 20px !important; }
-          .challenge-card, .bg-white.rounded-\[32px\], .bg-\[\#F8F8FA\].rounded-\[32px\], .strategy-card {
-              padding: 24px !important;
-              border-radius: 20px !important;
-          }
-
-          /* ---- 📱 各大板块特定结构修正 ---- */
-
-          /* [About Me] 个人信息区换行处理与左对齐 */
-          #about > div:first-child { flex-direction: column !important; align-items: flex-start !important; }
-          #about .lg\:w-1\/2.flex.flex-col.items-end { align-items: flex-start !important; width: 100% !important; mt: 32px !important; }
-          #about .w-\[280px\] { width: 100% !important; max-width: 320px; align-self: center; margin-bottom: 16px !important; }
-          #about .text-right { text-align: left !important; }
-
-          /* [Project 01] 项目成果：双列硬挤改单列，增强阅读连贯性 */
-          #project-01 .grid.grid-cols-2 { grid-template-columns: 1fr !important; gap: 40px !important; }
-
-          /* [Project 02] 布局精调 */
-          /* 底部数据 4列改2列 */
-          .project-02-wrapper .grid-cols-4 { grid-template-columns: repeat(2, 1fr) !important; gap: 32px 24px !important; }
-          /* AI 训练流程图：加入横向溢出防崩溃遮罩 */
-          .strategy-card .flex.items-center.gap-4.opacity-80 { 
-              overflow-x: auto; 
-              padding-bottom: 12px; 
-              -webkit-overflow-scrolling: touch; 
-              width: 100%; 
-              justify-content: flex-start; 
-              mask-image: linear-gradient(to right, black 85%, transparent 100%); 
-              -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
-          }
-          .strategy-card .flex.items-center.gap-4.opacity-80::-webkit-scrollbar { display: none; }
-
-          /* [Project 03] 侨智大会数据列修正 */
-          .p3-container .grid.divide-x { border: none !important; grid-template-columns: repeat(2, 1fr) !important; gap: 32px 16px !important; }
-          .p3-container .divide-x > div { border-right: none !important; }
-
-          /* [Project 04] Branding 板块微调 */
-          /* 碎暖：小圆点色卡防止横向挤压 */
-          .branding-module-wrapper .flex.gap-10 { gap: 16px !important; flex-wrap: wrap; justify-content: center; }
-          /* 碎暖：取消右侧图片的负边距越界 */
-          .col-emotional .w-\[120\%\] { width: 100% !important; margin-left: 0 !important; }
-          /* 结构解剖图 (Spoon/Handle) 从 4列平滑转为 2列 */
-          .branding-module-wrapper .grid-cols-2.lg\:grid-cols-4 { gap: 40px 24px !important; }
-          .branding-module-wrapper .border-l.border-dashed { height: 24px !important; margin-bottom: 16px !important; }
-
-          /* [Footer] 底部排版左对齐归一化 */
-          footer .grid-cols-1.md\:grid-cols-2 { gap: 48px !important; }
-          footer .items-end { align-items: flex-start !important; }
-          footer .justify-end { justify-content: flex-start !important; }
+            /* 清理高度占位 */
+            .h-\[1200px\], .h-\[800px\], .h-\[700px\], .h-\[600px\], .h-\[500px\], .h-\[450px\] { height: auto !important; padding: 40px 0 !important; }
+            .mt-\[380px\], .md\:mt-\[480px\], .lg\:mt-\[520px\] { margin-top: 64px !important; }
+            .mb-\[150px\] { margin-bottom: 48px !important; }
         }
 
         /* ---- 触屏设备优化：禁用自定义鼠标圆圈，避免卡顿 ---- */
