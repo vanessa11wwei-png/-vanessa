@@ -110,6 +110,78 @@
         .breathe-2 { animation: gentle-breathe 7s ease-in-out infinite 1s; }
         .breathe-3 { animation: gentle-breathe 6.5s ease-in-out infinite 0.5s; }
         .breathe-4 { animation: gentle-breathe 7.5s ease-in-out infinite 1.5s; }
+
+        /* ============================================================
+           📱 移动端适配补丁（新增）
+           说明：原页面里大量使用了固定像素宽度（如 1320px/1200px）
+           和绝对定位的装饰性 3D 元素，在手机窄屏上会导致内容溢出、
+           被裁切或错位。以下规则仅在 768px 及以下屏幕生效，
+           不影响电脑端原有的视觉效果。
+           ============================================================ */
+        @media (max-width: 768px) {
+
+          html, body { overflow-x: hidden; width: 100%; }
+
+          /* ---- 内容容器：从固定像素宽度改为流体宽度 ---- */
+          .logic-white-box {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            border-radius: 28px !important;
+            padding-bottom: 100px !important;
+          }
+          .visual-deep-box {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            border-radius: 28px !important;
+            padding-top: 200px !important;
+            padding-bottom: 80px !important;
+          }
+          .p3-giant-card { border-radius: 28px !important; }
+
+          /* Tailwind 内联的固定宽度类（w-[XXXpx]）在移动端强制改为100% */
+          .w-\[1400px\], .w-\[1360px\], .w-\[1320px\], .w-\[1300px\],
+          .w-\[1240px\], .w-\[1200px\], .w-\[1100px\], .w-\[1080px\],
+          .w-\[1000px\], .w-\[850px\], .w-\[800px\], .w-\[700px\],
+          .w-\[680px\], .w-\[620px\], .w-\[600px\], .w-\[500px\],
+          .w-\[460px\], .w-\[420px\], .w-\[400px\] {
+            width: 100% !important;
+          }
+
+          /* ---- 纯装饰性元素：手机上直接隐藏，避免遮挡/溢出正文 ---- */
+          .ghost-bg-text,               /* 巨大水印文字 */
+          .mockup-iphone-standard,      /* 漂浮的重复展示用手机模型 */
+          .prompt-code-overlay,         /* 装饰性代码浮层 */
+          .hand-drawn-circle,           /* 手绘圆圈装饰线 */
+          .perspective-grid-wrapper {   /* 3D 地板网格背景 */
+            display: none !important;
+          }
+
+          /* ---- 侨智大会板块：3D 等距手机矩阵改为可滚动的紧凑排列 ---- */
+          .isometric-viewport {
+            height: auto !important;
+            min-height: 0 !important;
+            padding: 40px 0 !important;
+            overflow-x: auto !important;
+          }
+          .phone-matrix-grid {
+            transform: scale(0.32) !important;
+            margin: 0 auto !important;
+            gap: 40px !important;
+          }
+
+          /* ---- MacBook / iPhone 展示模块：宽度跟随容器 ---- */
+          .mockup-macbook-breakout { border-radius: 16px !important; }
+
+          /* ---- 大字号水印/数字装饰缩小，避免撑破容器 ---- */
+          .card-number { font-size: 32px !important; top: 16px !important; right: 16px !important; }
+
+          /* ---- 品牌板块巨型水印马头图案缩小 ---- */
+          .branding-module-wrapper img[alt="水印左"],
+          .branding-module-wrapper img[alt="水印右"] { display: none !important; }
+        }
+
     </style>
 </head>
 <body class="antialiased">
