@@ -105,8 +105,7 @@
         .breathe-4 { animation: gentle-breathe 7.5s ease-in-out infinite 1.5s; }
 
         /* ============================================================
-           📱 Apple 级移动端排版重构 (Apple-Style Mobile Layout)
-           针对全网通用的响应式终极补丁
+           📱 Apple 级与观夏美学 移动端终极重构 (Apple & To-Summer Mobile Layout)
            ============================================================ */
         @media (max-width: 768px) {
             html, body { overflow-x: hidden; width: 100%; -webkit-text-size-adjust: 100%; }
@@ -142,21 +141,17 @@
             #about .text-right { text-align: left !important; }
             #about .w-\[280px\] { width: 100% !important; max-width: none !important; aspect-ratio: 4/5 !important; margin: 32px 0 !important; border-radius: 16px; border: none !important; padding: 0 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-            /* --- 悬浮图像重回文档流 --- */
-            .mockup-iphone-standard { position: relative !important; left: auto !important; right: auto !important; bottom: auto !important; margin: 32px auto !important; width: 85% !important; transform: none !important; }
-            .pos-left-top-cross, .pos-right-bottom-cross { transform: none !important; }
+            /* --- 🚀 项目一：彻底移除手机端的悬浮手机图 --- */
+            #project-01 .pos-left-top-cross, #project-01 .pos-right-bottom-cross { display: none !important; }
             .mockup-macbook-breakout, .billboard-vignette { width: calc(100% + 40px) !important; margin-left: -20px !important; border-radius: 0 !important; border-left: none !important; border-right: none !important; }
             .visual-deep-box > div.relative.w-full { flex-direction: column; align-items: center; margin-top: 0 !important; }
 
-            /* --- 🚀 核心修复：侨智大会 3D矩阵转横向滑动 --- */
-            .p3-container .relative.w-full.h-\[1000px\] { height: auto !important; padding: 20px 0 !important; overflow: visible !important; }
-            .isometric-viewport { height: auto !important; padding: 0 !important; overflow-x: auto !important; scroll-snap-type: x mandatory; margin: 0 -20px !important; width: calc(100% + 40px) !important; -webkit-overflow-scrolling: touch; perspective: none !important; transform-style: flat !important; }
-            .isometric-viewport::-webkit-scrollbar { display: none; }
-            /* 打平矩阵 */
-            .phone-matrix-grid { transform: none !important; margin: 0 !important; display: flex !important; flex-direction: row !important; gap: 16px !important; padding: 20px !important; width: max-content !important; }
-            .iso-column { transform: none !important; display: contents !important; } /* 子元素直接成为 matrix-grid 的 flex-item */
-            .hw-iphone-pro { transform: none !important; flex: 0 0 220px !important; height: 460px !important; box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; scroll-snap-align: center; border-radius: 28px !important; margin: 0 !important; }
-            .hw-iphone-pro:hover { transform: none !important; }
+            /* --- 🚀 核心修复：侨智大会 3D矩阵重现 (PC同构，缩放居中) --- */
+            .p3-container .relative.w-full.h-\[1000px\] { height: 500px !important; padding: 0 !important; overflow: hidden !important; }
+            .isometric-viewport { height: 500px !important; padding: 0 !important; overflow: hidden !important; display: flex !important; justify-content: center !important; align-items: center !important; perspective: 2000px !important; }
+            .phone-matrix-grid { transform: rotateX(60deg) rotateZ(-45deg) scale(0.3) !important; margin-top: -80px !important; display: flex !important; gap: 60px !important; width: auto !important; padding: 0 !important; }
+            .iso-column { transform: none !important; display: flex !important; flex-direction: column !important; gap: 60px !important; }
+            .hw-iphone-pro { transform: none !important; width: 300px !important; height: 620px !important; border-radius: 48px !important; box-shadow: -10px 10px 0 #77777D, -15px 18px 22px rgba(0, 0, 0, 0.2) !important; margin: 0 !important; }
 
             /* 底部四项数据变横滑卡片 */
             .p3-container .max-w-\[1200px\].mx-auto.px-10.py-\[64px\] { padding: 32px 0 !important; margin: 0 -20px !important; width: calc(100% + 40px) !important; overflow-x: auto !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
@@ -164,24 +159,46 @@
             .p3-container .grid.divide-x { display: flex !important; flex-direction: row !important; border: none !important; gap: 12px !important; padding: 0 20px !important; width: max-content !important; }
             .p3-container .divide-x > div { border: 1px solid rgba(0,0,0,0.05) !important; border-radius: 16px; padding: 24px 20px !important; flex: 0 0 200px !important; scroll-snap-align: center; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
 
-            /* --- 🚀 核心修复：品牌包装图层坍塌 --- */
+            /* --- 🌸 品牌包装：观夏美学 (高级画册、留白、单列对齐) --- */
             .branding-module-wrapper img[alt="水印左"], .branding-module-wrapper img[alt="水印右"], .branding-module-wrapper img[alt="水印中"] { display: none !important; }
-            .branding-module-wrapper .flex.gap-10 { gap: 12px !important; flex-wrap: wrap; justify-content: center; }
+            .branding-module-wrapper { padding-top: 60px !important; }
             
-            /* 海跃金鞍：阻止海报丢失与图层错乱 */
-            .w-full.aspect-\[4\/3\] { display: block !important; aspect-ratio: 4/3 !important; height: auto !important; width: 100% !important; }
-            .col-emotional .w-\[120\%\], .col-emotional .w-\[130\%\] { width: calc(100% + 40px) !important; margin-left: -20px !important; }
+            /* 字体轻量化与空灵感 */
+            .branding-module-wrapper .serif-title { font-weight: 300 !important; letter-spacing: 0.15em !important; font-family: "Noto Serif SC", serif !important; }
             
-            /* 熔语 & 海跃金鞍 绝对定位修复 */
-            .branding-module-wrapper .h-\[450px\] { height: auto !important; display: flex !important; flex-direction: row !important; justify-content: center; align-items: center; gap: 20px; padding: 20px 0; }
-            .branding-module-wrapper .h-\[450px\] .absolute { position: relative !important; width: 45% !important; height: auto !important; top: auto !important; bottom: auto !important; left: auto !important; right: auto !important; transform: none !important; }
-            
-            .branding-module-wrapper .h-\[600px\] { height: auto !important; flex-direction: column !important; gap: 32px !important; padding: 20px 0 !important; }
-            .branding-module-wrapper .h-\[600px\] .absolute { position: relative !important; width: 100% !important; right: auto !important; left: auto !important; top: auto !important; bottom: auto !important; transform: none !important; }
+            /* 左右结构一律变为上下居中结构 */
+            .branding-module-wrapper .editorial-row { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 60px !important; padding: 0 20px !important; }
+            .branding-module-wrapper .col-rational { width: 100% !important; padding: 0 !important; align-items: center !important; text-align: center !important; }
+            .branding-module-wrapper .col-rational p { text-align: justify !important; width: 100%; text-align-last: center; }
+            .branding-module-wrapper .col-rational ul { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+            .branding-module-wrapper .col-emotional { width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .branding-module-wrapper .col-emotional .relative { width: 100% !important; }
 
-            /* 火漆结构解剖图改为单列堆叠 */
+            /* 碎暖：小圆点色卡留白增加 */
+            .branding-module-wrapper .flex.gap-10 { gap: 24px !important; flex-wrap: wrap; justify-content: center; }
+            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t { padding-top: 60px !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 40px !important; border: none !important; margin-top: 0 !important;}
+            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t > div { width: 60% !important; }
+            
+            /* 海跃金鞍：阻止海报丢失，双马图居中优雅堆叠 */
+            .w-full.aspect-\[4\/3\] { display: block !important; aspect-ratio: 4/3 !important; height: auto !important; width: 100% !important; }
+            .branding-module-wrapper .h-\[280px\], .branding-module-wrapper .lg\:h-\[450px\] { height: auto !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 60px !important; padding: 40px 0 !important; display: flex !important;}
+            .branding-module-wrapper .h-\[280px\] .absolute, .branding-module-wrapper .lg\:h-\[450px\] .absolute { position: relative !important; width: 60% !important; height: auto !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; transform: none !important; margin: 0 auto !important; }
+            
+            /* 熔语：火漆印绝对定位修复，改为单列居中，大幅留白 */
+            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] { height: auto !important; flex-direction: column !important; align-items: center !important; gap: 80px !important; padding: 60px 20px !important; }
+            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] .absolute { position: relative !important; width: 85% !important; right: auto !important; left: auto !important; top: auto !important; bottom: auto !important; transform: none !important; margin: 0 auto !important; }
+
+            /* 结构解剖图改为单列堆叠，去除过多边框干扰 */
+            .branding-module-wrapper .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 80px !important; }
             .branding-module-wrapper .dramatic-physics-shadow { width: 80% !important; }
             
+            /* 实拍图相册：上下堆叠，文本居中 */
+            #physical-touch-gallery { padding-bottom: 80px !important; }
+            #physical-touch-gallery .flex-col.md\:flex-row { flex-direction: column !important; gap: 60px !important; }
+            #physical-touch-gallery .md\:w-\[55\%\], #physical-touch-gallery .md\:w-\[45\%\] { width: 100% !important; padding: 0 10% !important; }
+            #physical-touch-gallery .md\:mt-64 { margin-top: 0 !important; }
+            #physical-touch-gallery p { text-align: center !important; letter-spacing: 0.3em !important; margin-top: 24px !important; }
+
             /* 清理杂音干扰 */
             .ghost-bg-text, .hand-drawn-circle, .prompt-code-overlay, .perspective-grid-wrapper, .soul-line-dashed-connector, .soul-line-solid-top, .transition-node { display: none !important; }
 
