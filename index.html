@@ -180,6 +180,69 @@
           /* ---- 品牌板块巨型水印马头图案缩小 ---- */
           .branding-module-wrapper img[alt="水印左"],
           .branding-module-wrapper img[alt="水印右"] { display: none !important; }
+
+          /* ============================================================
+             第二轮修复：导航栏溢出 + 首屏文字重叠 + 板块间大片空白
+             ============================================================ */
+
+          /* ---- 悬浮导航栏：手机上文字会被截断，直接隐藏，不影响内容浏览 ---- */
+          #main-nav { display: none !important; }
+
+          /* ---- 首屏 HERO：原设计靠绝对定位+百分比叠放做杂志排版，
+                 窄屏上会导致标题与副标题文字重叠，改为正常纵向堆叠 ---- */
+          #cover {
+            height: auto !important;
+            min-height: 0 !important;
+            padding: 110px 24px 32px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 28px !important;
+          }
+          #hero-tagline, #hero-black-bar { display: none !important; }
+          #hero-meta, #hero-title, #hero-portfolio-banner {
+            position: static !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            left: auto !important;
+            right: auto !important;
+            top: auto !important;
+            bottom: auto !important;
+            margin: 0 !important;
+            transform: none !important;
+          }
+          #hero-title span { font-size: 44px !important; }
+          #hero-portfolio-banner {
+            height: auto !important;
+            padding: 20px !important;
+            justify-content: center !important;
+          }
+          #hero-portfolio-banner h1 { font-size: 18vw !important; text-align: center; }
+
+          /* ---- 大量固定像素高度的装饰性容器：手机上改为更矮的固定高度，
+                 避免内容没填满导致大片空白（不用 auto，否则内部绝对定位
+                 元素会因为父容器高度塌陷而错位） ---- */
+          .h-\[1200px\] { height: 640px !important; }
+          .h-\[800px\]  { height: 380px !important; }
+          .h-\[700px\]  { height: 340px !important; }
+          .h-\[600px\]  { height: 320px !important; }
+          .h-\[500px\]  { height: 280px !important; }
+          .h-\[450px\]  { height: 260px !important; }
+
+          /* ---- visual-deep-box：桌面端用负边距把上面的白色卡片"吃进"
+                 深色背景里做叠层效果，手机上负边距会撑出大片空白，改为
+                 正常衔接 ---- */
+          .visual-deep-box {
+            margin-top: 0 !important;
+            padding-top: 60px !important;
+            padding-bottom: 60px !important;
+          }
+
+          /* ---- 品牌板块"从图腾到造物"标题区：桌面端用 380px 顶部间距
+                 给上方水印图腾留位置，手机上水印已隐藏，间距缩小 ---- */
+          .mt-\[380px\] { margin-top: 60px !important; }
+
+          /* ---- AIGC 光影中国板块顶部间距，桌面 240px 起步偏大 ---- */
+          .project-02-wrapper { margin-top: 40px !important; padding-top: 80px !important; }
         }
 
     </style>
@@ -213,11 +276,11 @@
                 <ellipse cx="45%" cy="45%" rx="20%" ry="45%" stroke="rgba(0,0,0,0.12)" stroke-width="1" fill="none"/>
                 <circle cx="35%" cy="45%" r="35%" stroke="rgba(0,0,0,0.08)" stroke-width="1" fill="none"/>
             </svg>
-            <div class="absolute top-[45.5%] w-full flex justify-between px-12 md:px-24 text-[10px] text-[#888] font-mono z-10 pointer-events-none tracking-widest">
+            <div id="hero-tagline" class="absolute top-[45.5%] w-full flex justify-between px-12 md:px-24 text-[10px] text-[#888] font-mono z-10 pointer-events-none tracking-widest">
                 <span>believe in.</span><span class="ml-[40%]">passion</span><span>enthusiasm</span>
             </div>
             
-            <div class="absolute top-24 left-8 md:left-16 z-20 flex flex-col items-start">
+            <div id="hero-meta" class="absolute top-24 left-8 md:left-16 z-20 flex flex-col items-start">
                 <h2 class="text-[18px] md:text-[24px] font-black tracking-[0.2em] text-[#1A1A1A] uppercase leading-none mb-3">UI/UX & AIGC & BRAND DESIGNER</h2>
                 <div class="flex items-center gap-4 text-[16px] md:text-[20px] font-light text-[#333] mb-6">
                     <span>2025</span>
@@ -230,7 +293,7 @@
                 </div>
             </div>
             
-            <div class="absolute top-[35%] md:top-[40%] -mt-[30px] left-8 md:left-16 z-20 flex flex-col select-none">
+            <div id="hero-title" class="absolute top-[35%] md:top-[40%] -mt-[30px] left-8 md:left-16 z-20 flex flex-col select-none">
                 <div class="flex items-baseline gap-6 md:gap-10 mb-2">
                     <span class="text-[64px] md:text-[96px] font-black text-[#1A1A1A] leading-none tracking-tight">个 人</span>
                     <div class="flex flex-col mb-2 md:mb-4">
@@ -244,8 +307,8 @@
                 </div>
             </div>
 
-            <div class="absolute bottom-0 left-0 w-full h-[15vh] bg-[#0F0F0F] z-10"></div>
-            <div class="absolute bottom-[2vh] md:bottom-[5vh] left-[2vw] md:left-[5vw] w-[85vw] md:w-[65vw] max-w-[850px] h-[15vh] md:h-[22vh] bg-[#F5F5F5] z-30 shadow-[0_30px_60px_rgba(0,0,0,0.25)] flex items-center justify-start overflow-hidden border border-[#DDD] px-6 md:px-10 hover:shadow-[0_40px_80px_rgba(0,0,0,0.35)] transition-all duration-700">
+            <div id="hero-black-bar" class="absolute bottom-0 left-0 w-full h-[15vh] bg-[#0F0F0F] z-10"></div>
+            <div id="hero-portfolio-banner" class="absolute bottom-[2vh] md:bottom-[5vh] left-[2vw] md:left-[5vw] w-[85vw] md:w-[65vw] max-w-[850px] h-[15vh] md:h-[22vh] bg-[#F5F5F5] z-30 shadow-[0_30px_60px_rgba(0,0,0,0.25)] flex items-center justify-start overflow-hidden border border-[#DDD] px-6 md:px-10 hover:shadow-[0_40px_80px_rgba(0,0,0,0.35)] transition-all duration-700">
                 <div class="marble-texture opacity-30"></div>
                 <h1 class="text-[14vw] md:text-[9vw] font-black tracking-tighter leading-none text-3d-black relative z-10 w-full">PORTFOLIO</h1>
             </div>
