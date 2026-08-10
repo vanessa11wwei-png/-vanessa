@@ -105,7 +105,8 @@
         .breathe-4 { animation: gentle-breathe 7.5s ease-in-out infinite 1.5s; }
 
         /* ============================================================
-           📱 Apple 级与观夏美学 移动端终极重构 (Apple & To-Summer Mobile Layout)
+           📱 观夏画册风移动端重构 (To-Summer Editorial Mobile Layout)
+           核心调整：不对称左对齐、绝对定位错落叠放、大面积呼吸感
            ============================================================ */
         @media (max-width: 768px) {
             html, body { overflow-x: hidden; width: 100%; -webkit-text-size-adjust: 100%; }
@@ -141,15 +142,16 @@
             #about .text-right { text-align: left !important; }
             #about .w-\[280px\] { width: 100% !important; max-width: none !important; aspect-ratio: 4/5 !important; margin: 32px 0 !important; border-radius: 16px; border: none !important; padding: 0 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-            /* --- 🚀 项目一：彻底移除手机端的悬浮手机图 --- */
-            #project-01 .pos-left-top-cross, #project-01 .pos-right-bottom-cross { display: none !important; }
+            /* --- 🚀 修复项目一：彻底移除手机端的悬浮手机图 --- */
+            #project-01 .mockup-iphone-standard { display: none !important; } /* 彻底隐藏悬浮手机 */
             .mockup-macbook-breakout, .billboard-vignette { width: calc(100% + 40px) !important; margin-left: -20px !important; border-radius: 0 !important; border-left: none !important; border-right: none !important; }
             .visual-deep-box > div.relative.w-full { flex-direction: column; align-items: center; margin-top: 0 !important; }
 
-            /* --- 🚀 核心修复：侨智大会 3D矩阵重现 (PC同构，缩放居中) --- */
-            .p3-container .relative.w-full.h-\[1000px\] { height: 500px !important; padding: 0 !important; overflow: hidden !important; }
-            .isometric-viewport { height: 500px !important; padding: 0 !important; overflow: hidden !important; display: flex !important; justify-content: center !important; align-items: center !important; perspective: 2000px !important; }
-            .phone-matrix-grid { transform: rotateX(60deg) rotateZ(-45deg) scale(0.3) !important; margin-top: -80px !important; display: flex !important; gap: 60px !important; width: auto !important; padding: 0 !important; }
+            /* --- 🚀 核心修复：侨智大会 3D矩阵重现 (精调缩放比) --- */
+            .p3-container .relative.w-full.h-\[1000px\] { height: 450px !important; padding: 0 !important; overflow: hidden !important; }
+            .isometric-viewport { height: 450px !important; padding: 0 !important; overflow: hidden !important; display: flex !important; justify-content: center !important; align-items: center !important; perspective: 2000px !important; }
+            /* 通过精确计算的 scale 保留完整 3D 效果但缩小至手机视口 */
+            .phone-matrix-grid { transform: rotateX(60deg) rotateZ(-45deg) scale(0.3) !important; margin-top: -60px !important; display: flex !important; gap: 60px !important; width: auto !important; padding: 0 !important; }
             .iso-column { transform: none !important; display: flex !important; flex-direction: column !important; gap: 60px !important; }
             .hw-iphone-pro { transform: none !important; width: 300px !important; height: 620px !important; border-radius: 48px !important; box-shadow: -10px 10px 0 #77777D, -15px 18px 22px rgba(0, 0, 0, 0.2) !important; margin: 0 !important; }
 
@@ -159,47 +161,60 @@
             .p3-container .grid.divide-x { display: flex !important; flex-direction: row !important; border: none !important; gap: 12px !important; padding: 0 20px !important; width: max-content !important; }
             .p3-container .divide-x > div { border: 1px solid rgba(0,0,0,0.05) !important; border-radius: 16px; padding: 24px 20px !important; flex: 0 0 200px !important; scroll-snap-align: center; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
 
-            /* --- 🌸 品牌包装：观夏美学 (高级画册、留白、单列对齐) --- */
+            /* --- 🌸 品牌包装：观夏杂志美学 (左对齐、错落绝对定位、大留白) --- */
             .branding-module-wrapper img[alt="水印左"], .branding-module-wrapper img[alt="水印右"], .branding-module-wrapper img[alt="水印中"] { display: none !important; }
             .branding-module-wrapper { padding-top: 60px !important; }
             
-            /* 字体轻量化与空灵感 */
-            .branding-module-wrapper .serif-title { font-weight: 300 !important; letter-spacing: 0.15em !important; font-family: "Noto Serif SC", serif !important; }
+            /* 字体排版全面左对齐重塑 */
+            .branding-module-wrapper .text-center { text-align: left !important; align-items: flex-start !important; }
+            .branding-module-wrapper .justify-center { justify-content: flex-start !important; }
+            .branding-module-wrapper .serif-title { font-weight: 300 !important; letter-spacing: 0.1em !important; font-family: "Noto Serif SC", serif !important; }
             
-            /* 左右结构一律变为上下居中结构 */
-            .branding-module-wrapper .editorial-row { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 60px !important; padding: 0 20px !important; }
-            .branding-module-wrapper .col-rational { width: 100% !important; padding: 0 !important; align-items: center !important; text-align: center !important; }
-            .branding-module-wrapper .col-rational p { text-align: justify !important; width: 100%; text-align-last: center; }
-            .branding-module-wrapper .col-rational ul { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+            /* 段落左对齐及布局解构 */
+            .branding-module-wrapper .editorial-row { flex-direction: column !important; align-items: flex-start !important; gap: 48px !important; padding: 0 20px !important; }
+            .branding-module-wrapper .col-rational { width: 100% !important; padding: 0 !important; align-items: flex-start !important; text-align: left !important; }
+            .branding-module-wrapper .col-rational p { text-align: justify !important; width: 100%; text-align-last: left; }
+            .branding-module-wrapper .col-rational ul { width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
             .branding-module-wrapper .col-emotional { width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .branding-module-wrapper .col-emotional .relative { width: 100% !important; }
 
-            /* 碎暖：小圆点色卡留白增加 */
-            .branding-module-wrapper .flex.gap-10 { gap: 24px !important; flex-wrap: wrap; justify-content: center; }
-            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t { padding-top: 60px !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 40px !important; border: none !important; margin-top: 0 !important;}
-            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t > div { width: 60% !important; }
+            /* 碎暖：小圆点色卡错落 */
+            .branding-module-wrapper .flex.gap-10 { gap: 16px !important; flex-wrap: wrap; justify-content: flex-start !important; }
+            .branding-module-wrapper .flex.gap-10 > div { flex: 0 0 calc(50% - 16px); align-items: flex-start !important; }
+            .branding-module-wrapper .flex.gap-10 > div span { text-align: left; }
             
-            /* 海跃金鞍：阻止海报丢失，双马图居中优雅堆叠 */
+            /* 碎暖底部包装 4 小图 变为 2x2 网格 */
+            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t { padding-top: 40px !important; display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; border: none !important; margin-top: 0 !important;}
+            .w-full.mt-16.lg\:mt-40.pt-16.lg\:pt-32.border-t > div { width: 100% !important; }
+            
+            /* 海跃金鞍：双马图重构为错落叠放 (恢复绝对定位并调整比例) */
             .w-full.aspect-\[4\/3\] { display: block !important; aspect-ratio: 4/3 !important; height: auto !important; width: 100% !important; }
-            .branding-module-wrapper .h-\[280px\], .branding-module-wrapper .lg\:h-\[450px\] { height: auto !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 60px !important; padding: 40px 0 !important; display: flex !important;}
-            .branding-module-wrapper .h-\[280px\] .absolute, .branding-module-wrapper .lg\:h-\[450px\] .absolute { position: relative !important; width: 60% !important; height: auto !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; transform: none !important; margin: 0 auto !important; }
-            
-            /* 熔语：火漆印绝对定位修复，改为单列居中，大幅留白 */
-            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] { height: auto !important; flex-direction: column !important; align-items: center !important; gap: 80px !important; padding: 60px 20px !important; }
-            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] .absolute { position: relative !important; width: 85% !important; right: auto !important; left: auto !important; top: auto !important; bottom: auto !important; transform: none !important; margin: 0 auto !important; }
+            .branding-module-wrapper .h-\[280px\], .branding-module-wrapper .lg\:h-\[450px\] { height: 340px !important; display: block !important; position: relative !important; padding: 0 !important; width: 100% !important; margin: 0 auto; }
+            .branding-module-wrapper .h-\[280px\] .absolute:first-child, .branding-module-wrapper .lg\:h-\[450px\] .absolute:first-child { width: 220px !important; height: 220px !important; left: -10px !important; top: 0 !important; z-index: 2 !important; position: absolute !important; margin: 0 !important; transform: none !important; }
+            .branding-module-wrapper .h-\[280px\] .absolute:last-child, .branding-module-wrapper .lg\:h-\[450px\] .absolute:last-child { width: 200px !important; height: 200px !important; right: -10px !important; bottom: 0 !important; z-index: 3 !important; position: absolute !important; margin: 0 !important; transform: none !important; }
 
-            /* 结构解剖图改为单列堆叠，去除过多边框干扰 */
-            .branding-module-wrapper .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 80px !important; }
-            .branding-module-wrapper .dramatic-physics-shadow { width: 80% !important; }
+            /* 海跃金鞍：色卡矩阵恢复双列错落 */
+            .branding-module-wrapper .w-full.mt-10.lg\:mt-auto.mb-10.flex.flex-col.items-center.gap-10 { align-items: flex-start !important; gap: 32px !important; }
+            .branding-module-wrapper .w-full.mt-10.lg\:mt-auto.mb-10.flex.flex-col.items-center.gap-10 > div { align-items: flex-start !important; }
             
-            /* 实拍图相册：上下堆叠，文本居中 */
+            /* 熔语：火漆印绝对定位恢复，错落折叠叠放 */
+            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] { height: 420px !important; display: block !important; position: relative !important; padding: 0 !important; overflow: hidden !important; }
+            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] > div.relative.md\:absolute:first-child { position: absolute !important; width: 85% !important; top: 0 !important; right: -10% !important; transform: none !important; margin: 0 !important; }
+            .branding-module-wrapper .h-\[auto\].md\:h-\[600px\] > div.relative.md\:absolute:last-child { position: absolute !important; width: 95% !important; bottom: 0 !important; left: -5% !important; transform: none !important; margin: 0 !important; z-index: 20 !important; }
+
+            /* 结构解剖图改为 2x2 网格叠放排列 */
+            .branding-module-wrapper .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-4 { grid-template-columns: repeat(2, 1fr) !important; gap: 40px 16px !important; }
+            .branding-module-wrapper .dramatic-physics-shadow { width: 90% !important; }
+            .branding-module-wrapper .h-12.lg\:h-16.border-l.border-dashed { height: 24px !important; margin-bottom: 24px !important; }
+            
+            /* 实拍图相册：非对称杂志排版 (Asymmetrical Masonry) */
             #physical-touch-gallery { padding-bottom: 80px !important; }
-            #physical-touch-gallery .flex-col.md\:flex-row { flex-direction: column !important; gap: 60px !important; }
-            #physical-touch-gallery .md\:w-\[55\%\], #physical-touch-gallery .md\:w-\[45\%\] { width: 100% !important; padding: 0 10% !important; }
-            #physical-touch-gallery .md\:mt-64 { margin-top: 0 !important; }
-            #physical-touch-gallery p { text-align: center !important; letter-spacing: 0.3em !important; margin-top: 24px !important; }
+            #physical-touch-gallery .flex-col.md\:flex-row { flex-direction: column !important; gap: 60px !important; align-items: flex-start !important; }
+            #physical-touch-gallery .md\:w-\[55\%\] { width: 90% !important; padding: 0 !important; margin-right: auto !important; }
+            #physical-touch-gallery .md\:w-\[45\%\] { width: 80% !important; padding: 0 !important; margin-left: auto !important; margin-top: -20px !important; } /* 往上叠压一点点 */
+            #physical-touch-gallery p { text-align: left !important; letter-spacing: 0.2em !important; margin-top: 16px !important; }
 
-            /* 清理杂音干扰 */
+            /* 清理多余装饰 */
             .ghost-bg-text, .hand-drawn-circle, .prompt-code-overlay, .perspective-grid-wrapper, .soul-line-dashed-connector, .soul-line-solid-top, .transition-node { display: none !important; }
 
             /* --- Footer --- */
@@ -514,7 +529,8 @@
                     </div>
                 </div>
 
-                <div class="mockup-iphone-standard pos-left-top-cross reveal z-[200]">
+                <!-- 【修改点】移动端隐藏这段悬浮的手机模型，视觉更清爽 -->
+                <div class="mockup-iphone-standard pos-left-top-cross reveal z-[200] hidden md:block">
                     <div class="iphone-body">
                         <div class="iphone-screen">
                             <div class="iphone-notch"></div>
@@ -538,7 +554,8 @@
                         <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/u73G/1945X5805/553de44ffb9799b63fb54d6048f98aaf.jpg" class="w-full h-auto block relative z-10" alt="PC Web">
                     </div>
 
-                    <div class="mockup-iphone-standard pos-right-bottom-cross z-[110]">
+                    <!-- 【修改点】移动端隐藏这段悬浮的手机模型 -->
+                    <div class="mockup-iphone-standard pos-right-bottom-cross z-[110] hidden md:block">
                         <div class="iphone-body">
                             <div class="iphone-screen">
                                 <div class="iphone-notch"></div>
@@ -777,7 +794,8 @@
                     </div>
                 </div>
 
-                <div class="relative w-full h-[auto] md:h-[1000px] mt-10 overflow-visible flex justify-center items-center">
+                <!-- 【修改点】通过保留透视容器，利用 CSS scale 将 3D 矩阵完美嵌套进移动端视图 -->
+                <div class="relative w-full h-[auto] mt-10 overflow-visible flex justify-center items-center">
                     <div class="absolute inset-0 pointer-events-none z-0 hidden md:block">
                         <div class="perspective-grid-wrapper"><div class="perspective-grid-floor"><div class="grid-surface-3d"></div></div></div>
                     </div>
@@ -836,10 +854,11 @@
             <div class="soul-line-solid-top hidden md:block"></div>
 
             <div class="w-full relative z-10">
-                <div class="text-center mb-16 lg:mb-40 reveal pt-10 lg:pt-16 px-6 lg:px-10">
+                <!-- 【修改点】引言左对齐，去除居中 -->
+                <div class="mb-16 lg:mb-40 reveal pt-10 lg:pt-16 px-6 lg:px-10 flex flex-col items-start lg:items-center lg:text-center">
                     <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.6em] text-[#A69C92] uppercase block mb-4 lg:mb-6">04 / BRANDING & PACKAGING</span>
                     <h2 class="text-[28px] md:text-[52px] text-[#3D332B] mb-4 lg:mb-6 serif-title font-bold tracking-widest">视觉符号与实体包装探索</h2>
-                    <p class="text-[13px] lg:text-[14px] text-[#7A6F66] font-light max-w-2xl mx-auto leading-relaxed tracking-[0.1em] lg:tracking-[0.15em]">
+                    <p class="text-[13px] lg:text-[14px] text-[#7A6F66] font-light max-w-2xl lg:mx-auto leading-relaxed tracking-[0.1em] lg:tracking-[0.15em] text-justify md:text-center">
                         从数字界面走向物理世界，探索图形推导、材质解构与文化符号的实体化表达。
                     </p>
                 </div>
@@ -850,33 +869,33 @@
                 <div class="reveal mb-20 lg:mb-32 relative">
                     <div class="absolute top-0 right-0 w-[400px] h-[400px] lg:w-[800px] lg:h-[800px] bg-[#FAF9F5] rounded-full filter blur-[80px] lg:blur-[120px] opacity-70 pointer-events-none transform translate-x-1/4 -translate-y-1/4"></div>
 
-                    <!-- 1. 诗意化居中序言 -->
-                    <div class="flex flex-col items-center text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-32 relative z-10">
+                    <!-- 【修改点】碎暖诗意化序言：左对齐 -->
+                    <div class="flex flex-col items-start lg:items-center lg:text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-32 relative z-10">
                         <span class="text-[9px] lg:text-[10px] text-[#A69C92] tracking-[0.6em] uppercase mb-4 lg:mb-6 font-mono">01 / Branding Identity</span>
                         <h3 class="serif-title text-[40px] md:text-[72px] text-[#3D332B] tracking-[0.1em] mb-3 lg:mb-4">碎 暖</h3>
                         <span class="font-serif italic text-[#A69C92] text-[14px] lg:text-[16px] tracking-[0.3em] mb-8 lg:mb-12 block">Sui Nuan</span>
                         
-                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px]">
+                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px] text-justify lg:text-center">
                             本产品根据二十四节气调制不同的气氛，利用蜡烛台与不同的、代表季节性的蜡烛，<br class="hidden md:block">
                             让人们通过感知节气的变化。<br class="hidden md:block">
                             是一款为用户提供温和的、独特的时间感知体验的设计。
                         </p>
                         
-                        <!-- 克制的小圆点色卡 -->
-                        <div class="flex flex-wrap gap-6 lg:gap-10 mt-12 lg:mt-16 items-center justify-center w-full">
-                            <div class="flex flex-col items-center gap-3 lg:gap-4 group cursor-pointer w-[40%] md:w-auto">
+                        <!-- 【修改点】色卡：移动端 2x2 左侧整齐排列 -->
+                        <div class="flex flex-wrap gap-4 lg:gap-10 mt-12 lg:mt-16 justify-start lg:justify-center w-full">
+                            <div class="flex items-center gap-3 lg:flex-col lg:gap-4 group cursor-pointer w-[calc(50%-16px)] lg:w-auto">
                                 <div class="w-4 h-4 rounded-full bg-[#E5B5AF] shadow-inner transition-transform duration-500 group-hover:scale-125"></div>
                                 <span class="text-[10px] font-medium text-[#A69C92] tracking-[0.2em] md:opacity-0 group-hover:opacity-100 transition-opacity">冷山春桃</span>
                             </div>
-                            <div class="flex flex-col items-center gap-3 lg:gap-4 group cursor-pointer w-[40%] md:w-auto">
+                            <div class="flex items-center gap-3 lg:flex-col lg:gap-4 group cursor-pointer w-[calc(50%-16px)] lg:w-auto">
                                 <div class="w-4 h-4 rounded-full bg-[#8FA17B] shadow-inner transition-transform duration-500 group-hover:scale-125"></div>
                                 <span class="text-[10px] font-medium text-[#A69C92] tracking-[0.2em] md:opacity-0 group-hover:opacity-100 transition-opacity">长忆青莲</span>
                             </div>
-                            <div class="flex flex-col items-center gap-3 lg:gap-4 group cursor-pointer w-[40%] md:w-auto">
+                            <div class="flex items-center gap-3 lg:flex-col lg:gap-4 group cursor-pointer w-[calc(50%-16px)] lg:w-auto mt-2 lg:mt-0">
                                 <div class="w-4 h-4 rounded-full bg-[#6B5143] shadow-inner transition-transform duration-500 group-hover:scale-125"></div>
                                 <span class="text-[10px] font-medium text-[#A69C92] tracking-[0.2em] md:opacity-0 group-hover:opacity-100 transition-opacity">夜阑秋梧</span>
                             </div>
-                            <div class="flex flex-col items-center gap-3 lg:gap-4 group cursor-pointer w-[40%] md:w-auto">
+                            <div class="flex items-center gap-3 lg:flex-col lg:gap-4 group cursor-pointer w-[calc(50%-16px)] lg:w-auto mt-2 lg:mt-0">
                                 <div class="w-4 h-4 rounded-full bg-[#A4C9E1] shadow-inner transition-transform duration-500 group-hover:scale-125"></div>
                                 <span class="text-[10px] font-medium text-[#A69C92] tracking-[0.2em] md:opacity-0 group-hover:opacity-100 transition-opacity">苍山负雪</span>
                             </div>
@@ -884,13 +903,13 @@
                     </div>
 
                     <!-- 2. 左文右图的经典结构恢复 -->
-                    <div class="editorial-row relative z-10 flex flex-col lg:flex-row items-center max-w-[1400px] mx-auto px-6 lg:px-10 mb-20 lg:mb-32">
+                    <div class="editorial-row relative z-10 flex flex-col lg:flex-row items-start lg:items-center max-w-[1400px] mx-auto px-6 lg:px-10 mb-20 lg:mb-32">
                         
                         <!-- LEFT COLUMN -->
                         <div class="col-rational w-full lg:w-[40%] flex flex-col relative z-10 lg:pr-10">
                             <div class="flex flex-col items-start w-full">
                                 <span class="text-[10px] lg:text-[11px] font-bold text-[#A69C92] tracking-[0.4em] uppercase block mb-4 lg:mb-6">Research / 调研</span>
-                                <p class="text-[#7A6F66] text-[13px] leading-[2.2] font-light mb-6 lg:mb-8 text-justify">
+                                <p class="text-[#7A6F66] text-[13px] leading-[2.2] font-light mb-6 lg:mb-8 text-justify lg:text-left">
                                     随着现代生活节奏的加快和社会压力的增大，消费者对情绪释放和解决情绪问题的需求已经越来越高。
                                 </p>
                                 <ul class="flex flex-col gap-4 lg:gap-5 mb-10 lg:mb-12">
@@ -925,7 +944,6 @@
                             <span class="text-[10px] lg:text-[11px] font-bold text-[#A69C92] tracking-[0.3em] uppercase">Details & Textures</span>
                         </div>
                         <div class="w-full h-[1px] bg-[#E8E2D8] relative mb-8 lg:mb-12">
-                            <!-- 点缀小圆圈 -->
                             <div class="absolute top-1/2 right-[10%] md:right-[18%] -translate-y-1/2 w-[16px] h-[16px] lg:w-[22px] lg:h-[22px] rounded-full border border-[#E8E2D8] bg-[#F8F7F4]"></div>
                         </div>
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 w-full items-stretch">
@@ -949,18 +967,18 @@
                             </div>
                         </div>
 
-                        <!-- 碎暖：底部悬浮4小图 -->
-                        <div class="w-full mt-16 lg:mt-40 pt-16 lg:pt-32 border-t border-[#E8E2D8]/60 flex flex-wrap justify-between items-end gap-6 relative z-10">
-                            <div class="w-[45%] lg:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
+                        <!-- 【修改点】碎暖底部 4 小图：移动端强制 2x2 网格，不再横向挤缩 -->
+                        <div class="w-full mt-16 lg:mt-40 pt-16 lg:pt-32 border-t border-[#E8E2D8]/60 grid grid-cols-2 md:flex flex-wrap justify-between items-end gap-6 relative z-10">
+                            <div class="w-full md:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
                                 <div class="breathe-1 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/gIKM/252X297/%E8%B5%84%E6%BA%90_3.png" class="w-full h-auto object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.08)]" alt="包装小图"></div>
                             </div>
-                            <div class="w-[45%] lg:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
+                            <div class="w-full md:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
                                 <div class="breathe-2 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/e3D7/301X293/%E8%B5%84%E6%BA%90_4.png" class="w-full h-auto object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.08)]" alt="包装小图"></div>
                             </div>
-                            <div class="w-[45%] lg:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
+                            <div class="w-full md:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
                                 <div class="breathe-3 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/pPzd/302X294/%E8%B5%84%E6%BA%90_5.png" class="w-full h-auto object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.08)]" alt="包装小图"></div>
                             </div>
-                            <div class="w-[45%] lg:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
+                            <div class="w-full md:w-[20%] transition-all duration-500 hover:scale-105 z-10 cursor-pointer">
                                 <div class="breathe-4 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Bl0w/252X287/%E8%B5%84%E6%BA%90_6.png" class="w-full h-auto object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.08)]" alt="包装小图"></div>
                             </div>
                         </div>
@@ -971,15 +989,15 @@
 
                 <!-- ================= 02 海跃金鞍 ================= -->
                 <div class="reveal mb-20 lg:mb-32 relative z-10">
-                    <!-- 1. 诗意化居中序言 -->
-                    <div class="flex flex-col items-center text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-32 relative z-10">
+                    <!-- 【修改点】海跃序言左对齐 -->
+                    <div class="flex flex-col items-start lg:items-center lg:text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-32 relative z-10">
                         <span class="text-[9px] lg:text-[10px] text-[#A69C92] tracking-[0.6em] uppercase mb-4 lg:mb-6 font-mono">02 / Branding Identity</span>
                         <h3 class="serif-title text-[40px] md:text-[72px] text-[#3D332B] tracking-[0.1em] mb-3 lg:mb-4">海跃金鞍</h3>
                         <span class="font-serif italic text-[#A69C92] text-[14px] lg:text-[16px] tracking-[0.3em] mb-8 lg:mb-12 block">Hai Yue Jin An</span>
-                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px]">
-                            凝练泉州海丝文化与马的精神图腾。<br>
-                            「马」为灵魂，象征开拓动能与海丝交融；<br>
-                            「纹」作骨架，将伊斯兰几何与闽南窗花解构为纯粹肌理。<br>
+                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px] text-justify lg:text-center">
+                            凝练泉州海丝文化与马的精神图腾。<br class="hidden md:block">
+                            「马」为灵魂，象征开拓动能与海丝交融；<br class="hidden md:block">
+                            「纹」作骨架，将伊斯兰几何与闽南窗花解构为纯粹肌理。<br class="hidden md:block">
                             让深厚的千年文明，以最当代、克制的方式举重若轻地表达。
                         </p>
                     </div>
@@ -988,25 +1006,27 @@
                     <div class="editorial-row reveal relative z-10 flex flex-col lg:flex-row items-center max-w-[1400px] mx-auto px-6 lg:px-10">
                         <!-- 左侧：两匹马 -->
                         <div class="w-full lg:w-[50%] flex justify-center relative z-10">
-                            <div class="relative w-full max-w-[300px] lg:max-w-[400px] h-[280px] lg:h-[450px]">
-                                <div class="absolute left-0 top-0 lg:top-10 w-32 h-32 md:w-56 md:h-56 lg:w-[280px] lg:h-[280px] transform transition-all duration-700 hover:scale-[1.05] hover:-translate-y-4 z-20 cursor-pointer">
+                            <!-- 【修改点】移动端固定 340px 高度，保证绝对定位叠加不坍塌 -->
+                            <div class="relative w-full max-w-[340px] lg:max-w-[400px] h-[340px] lg:h-[450px]">
+                                <div class="absolute left-[-10px] lg:left-0 top-0 lg:top-10 w-[220px] h-[220px] lg:w-[280px] lg:h-[280px] transform transition-all duration-700 hover:scale-[1.05] hover:-translate-y-4 z-20 cursor-pointer">
                                     <div class="breathe-1 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/kXPu/1128X1125/e42f3711b417b2598b4962f1a3c0d0dc.png" class="w-full h-auto object-contain block drop-shadow-[0_25px_35px_rgba(74,58,47,0.15)]" alt="粉色马图腾"></div>
                                 </div>
-                                <div class="absolute right-0 bottom-0 w-32 h-32 md:w-48 md:h-48 lg:w-[240px] lg:h-[240px] transform transition-all duration-700 hover:scale-[1.05] hover:-translate-y-4 z-30 cursor-pointer">
+                                <div class="absolute right-[-10px] lg:right-0 bottom-0 w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] transform transition-all duration-700 hover:scale-[1.05] hover:-translate-y-4 z-30 cursor-pointer">
                                     <div class="breathe-2 w-full h-full"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/RyGc/2048X2048/0cf8d3b2e44019eb8f9c56b905f19318.png" class="w-full h-auto object-contain block drop-shadow-[0_35px_50px_rgba(74,58,47,0.2)]" alt="咖色马图腾"></div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 右侧：底纹马 + 恢复方块色卡居中 -->
-                        <div class="w-full lg:w-[55%] flex flex-col items-center relative z-10 lg:pl-10 mt-16 lg:mt-0">
+                        <div class="w-full lg:w-[55%] flex flex-col items-start lg:items-center relative z-10 lg:pl-10 mt-16 lg:mt-0">
                             <div class="absolute top-0 lg:top-16 left-1/2 transform -translate-x-1/2 w-[80%] lg:w-[620px] z-0 pointer-events-none transition-all duration-1000">
                                 <div class="breathe-3 w-full h-full opacity-30"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/QQRI/2048X2048/8a63d66910228d5fc6b183de8252b0b8.png" class="w-full h-auto object-contain block" alt="底纹符文马"></div>
                             </div>
                             
-                            <div class="w-full mt-10 lg:mt-auto mb-10 flex flex-col items-center gap-10 lg:gap-12 relative z-10">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5 text-center">01 / 粉色马主题</span>
+                            <!-- 【修改点】色卡：移动端左对齐排布 -->
+                            <div class="w-full mt-10 lg:mt-auto mb-10 flex flex-col items-start lg:items-center gap-8 lg:gap-12 relative z-10">
+                                <div class="flex flex-col items-start lg:items-center">
+                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5">01 / 粉色马主题</span>
                                     <div class="flex gap-4 lg:gap-5">
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#F1E9DD] shadow-sm border border-black/5"></div>
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#E6C0BF] shadow-sm border border-black/5"></div>
@@ -1014,8 +1034,8 @@
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#AA5E5F] shadow-sm border border-black/5"></div>
                                     </div>
                                 </div>
-                                <div class="flex flex-col items-center">
-                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5 text-center">02 / 白绿色马主题</span>
+                                <div class="flex flex-col items-start lg:items-center">
+                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5">02 / 白绿色马主题</span>
                                     <div class="flex gap-4 lg:gap-5">
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#B3BDA9] shadow-sm border border-black/5"></div>
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#8CABAC] shadow-sm border border-black/5"></div>
@@ -1023,8 +1043,8 @@
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#B46841] shadow-sm border border-black/5"></div>
                                     </div>
                                 </div>
-                                <div class="flex flex-col items-center">
-                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5 text-center">03 / 咖色马主题</span>
+                                <div class="flex flex-col items-start lg:items-center">
+                                    <span class="text-[10px] lg:text-[11px] font-bold tracking-[0.3em] text-[#A69C92] uppercase block mb-4 lg:mb-5">03 / 咖色马主题</span>
                                     <div class="flex gap-4 lg:gap-5">
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#A4A495] shadow-sm border border-black/5"></div>
                                         <div class="w-8 h-8 lg:w-11 lg:h-11 rounded-sm bg-[#C9A57F] shadow-sm border border-black/5"></div>
@@ -1036,7 +1056,7 @@
                         </div>
                     </div>
 
-                    <!-- 3. Exhibition (恢复原版左右阵列) -->
+                    <!-- 3. Exhibition -->
                     <div class="w-full relative z-20 reveal pt-16 lg:pt-20 pb-24 lg:pb-40 bg-[#FCFAF6] overflow-hidden rounded-[24px] lg:rounded-[40px] shadow-[inset_0_0_120px_rgba(122,111,102,0.03)] border border-[#E8E2D8]/40 mt-20 lg:mt-32">
                         <div class="absolute inset-x-0 top-[5%] lg:top-[12%] flex justify-center items-center opacity-[0.35] mix-blend-multiply pointer-events-none select-none z-0 hidden md:flex">
                             <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/C8Ji/1242X2688/d524c77ce744202275004b4c72cc8fc2.png" class="w-[12%] md:w-[15%] -mr-8 md:-mr-12 transform -rotate-[8deg] drop-shadow-md" alt="水印左">
@@ -1093,12 +1113,14 @@
                 <div class="w-full h-[1px] bg-[#E8E2D8] my-16 lg:my-32 reveal"></div>
                 <!-- ================= 03 熔语 ================= -->
                 <div class="w-full reveal relative z-10 pb-24 lg:pb-40">
-                    <div class="flex flex-col items-center text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-48">
+                    <!-- 【修改点】熔语左对齐 -->
+                    <div class="flex flex-col items-start lg:items-center lg:text-center max-w-[800px] mx-auto px-6 lg:px-8 mb-16 lg:mb-48">
                         <span class="text-[9px] lg:text-[10px] text-[#A69C92] tracking-[0.6em] uppercase mb-4 lg:mb-8 font-mono">03 / Branding Identity</span>
                         <h3 class="serif-title text-[40px] md:text-[72px] text-[#3D332B] tracking-[0.1em] mb-3 lg:mb-4">熔 语</h3>
                         <span class="font-serif italic text-[#A69C92] text-[14px] lg:text-[16px] tracking-[0.3em] mb-8 lg:mb-12 block">Molten Whisper</span>
-                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px] tracking-wide font-medium">历史的温度，凝固于方寸之间。「熔语」融合古典火漆文化符号与极简几何，重塑拆封的仪式感，让每一次印记，都成为情感与美学的私语。</p>
-                        <div class="flex gap-6 lg:gap-10 mt-12 lg:mt-20 items-center justify-center">
+                        <p class="text-[#7A6F66] text-[13px] md:text-[15px] leading-[2.2] lg:leading-[2.6] font-light max-w-[600px] text-justify lg:text-center">历史的温度，凝固于方寸之间。「熔语」融合古典火漆文化符号与极简几何，重塑拆封的仪式感，让每一次印记，都成为情感与美学的私语。</p>
+                        
+                        <div class="flex gap-6 lg:gap-10 mt-12 lg:mt-20 justify-start lg:justify-center w-full">
                             <div class="w-4 h-4 rounded-full bg-[#65776C] shadow-inner transition-transform duration-500 hover:scale-125 cursor-pointer"></div>
                             <div class="w-4 h-4 rounded-full bg-[#5F673C] shadow-inner transition-transform duration-500 hover:scale-125 cursor-pointer"></div>
                             <div class="w-4 h-4 rounded-full bg-[#B16D29] shadow-inner transition-transform duration-500 hover:scale-125 cursor-pointer"></div>
@@ -1107,40 +1129,43 @@
                         </div>
                     </div>
 
-                    <div class="relative w-full max-w-[1200px] mx-auto h-[auto] md:h-[600px] z-20 reveal mb-24 md:mb-56 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-0 px-6">
-                        <div class="relative md:absolute w-full md:w-[55%] md:right-[5%] md:top-[0%] z-10 transform transition-all duration-[4s] hover:-translate-y-4"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/pmD9/3750X2500/y.jpg" class="w-full h-auto drop-shadow-2xl rounded-sm"></div>
-                        <div class="relative md:absolute w-[80%] md:w-[60%] md:left-[2%] md:bottom-[0%] z-20 transform transition-all duration-[4s] hover:translate-y-2 hover:rotate-[1deg]"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/vjSs/2536X2299/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260305235236_1191_30.png" class="w-full h-auto drop-shadow-xl transform md:-rotate-[10deg]"></div>
+                    <!-- 【修改点】熔语信封：移动端 420px 高度，保证绝对定位叠加呈现折纸交错感 -->
+                    <div class="relative w-full max-w-[1200px] mx-auto h-[420px] md:h-[600px] z-20 reveal mb-24 md:mb-56 px-6">
+                        <div class="absolute w-[85%] md:w-[55%] right-[-10%] md:right-[5%] top-[0%] z-10 transform transition-all duration-[4s] hover:-translate-y-4"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/pmD9/3750X2500/y.jpg" class="w-full h-auto drop-shadow-2xl rounded-sm"></div>
+                        <div class="absolute w-[95%] md:w-[60%] left-[-5%] md:left-[2%] bottom-[0%] z-20 transform transition-all duration-[4s] hover:translate-y-2 hover:rotate-[1deg]"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/vjSs/2536X2299/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260305235236_1191_30.png" class="w-full h-auto drop-shadow-xl transform md:-rotate-[10deg]"></div>
                     </div>
 
                     <div class="relative z-10 w-full max-w-[1200px] mx-auto reveal mb-24 lg:mb-48 px-6 lg:px-10">
-                        <div class="text-center mb-16 lg:mb-32 flex flex-col items-center">
+                        <div class="text-left lg:text-center mb-16 lg:mb-32 flex flex-col items-start lg:items-center">
                             <span class="text-[10px] lg:text-[12px] font-serif italic text-[#8A8175] tracking-[0.4em] block mb-4 lg:mb-6 font-mono">Structural Anatomy</span>
                             <div class="w-[1px] h-8 lg:h-12 bg-[#A69C92]/30"></div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-10">
+                        
+                        <!-- 【修改点】结构解剖图改为 2x2 网格，清爽不拥挤 -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-4 lg:gap-10">
                             <div class="flex flex-col items-center group relative">
-                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-8 lg:mb-12 uppercase">Spoon</span>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/h9kJ/465X625/%E8%B5%84%E6%BA%90_4.png" class="w-[50%] lg:w-[65%] mix-blend-multiply opacity-60 mb-8 lg:mb-12">
-                                <div class="w-[1px] h-12 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-8 lg:mb-12"></div>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/B1a2/1902X2737/f47c07e84a3e42b41922ec76cbe70f29.png" class="w-[50%] lg:w-[60%] dramatic-physics-shadow">
+                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-6 lg:mb-12 uppercase">Spoon</span>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/h9kJ/465X625/%E8%B5%84%E6%BA%90_4.png" class="w-[60%] lg:w-[65%] mix-blend-multiply opacity-60 mb-6 lg:mb-12">
+                                <div class="w-[1px] h-8 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-6 lg:mb-12"></div>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/B1a2/1902X2737/f47c07e84a3e42b41922ec76cbe70f29.png" class="w-[90%] lg:w-[60%] dramatic-physics-shadow">
                             </div>
                             <div class="flex flex-col items-center group relative mt-0">
-                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-8 lg:mb-12 uppercase">Handle</span>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/NvAA/466X625/%E8%B5%84%E6%BA%90_5.png" class="w-[50%] lg:w-[65%] mix-blend-multiply opacity-60 mb-8 lg:mb-12">
-                                <div class="w-[1px] h-12 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-8 lg:mb-12"></div>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/k7LR/1902X2737/5ea2eae19ba9be6cd8b4e48d21f00dcb.png" class="w-[40%] lg:w-[50%] dramatic-physics-shadow">
+                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-6 lg:mb-12 uppercase">Handle</span>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/NvAA/466X625/%E8%B5%84%E6%BA%90_5.png" class="w-[60%] lg:w-[65%] mix-blend-multiply opacity-60 mb-6 lg:mb-12">
+                                <div class="w-[1px] h-8 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-6 lg:mb-12"></div>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/k7LR/1902X2737/5ea2eae19ba9be6cd8b4e48d21f00dcb.png" class="w-[80%] lg:w-[50%] dramatic-physics-shadow">
                             </div>
                             <div class="flex flex-col items-center group relative">
-                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-8 lg:mb-12 uppercase">Pellets</span>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/a3rR/465X625/%E8%B5%84%E6%BA%90_6.png" class="w-[50%] lg:w-[65%] mix-blend-multiply opacity-60 mb-8 lg:mb-12">
-                                <div class="w-[1px] h-12 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-8 lg:mb-12"></div>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Nqn1/1902X2737/60e65c163e0a68e5f8dd597671283d62.png" class="w-[50%] lg:w-[60%] dramatic-physics-shadow">
+                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-6 lg:mb-12 uppercase">Pellets</span>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/a3rR/465X625/%E8%B5%84%E6%BA%90_6.png" class="w-[60%] lg:w-[65%] mix-blend-multiply opacity-60 mb-6 lg:mb-12">
+                                <div class="w-[1px] h-8 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-6 lg:mb-12"></div>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Nqn1/1902X2737/60e65c163e0a68e5f8dd597671283d62.png" class="w-[90%] lg:w-[60%] dramatic-physics-shadow">
                             </div>
                             <div class="flex flex-col items-center group relative mt-0">
-                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-8 lg:mb-12 uppercase">Furnace</span>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/6uh9/855X691/%E8%B5%84%E6%BA%90_7.png" class="w-[50%] lg:w-[65%] mix-blend-multiply opacity-60 mb-8 lg:mb-12">
-                                <div class="w-[1px] h-12 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-8 lg:mb-12"></div>
-                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/tVUs/3000X1907/6f8d3587392e92bb27462322bcfc50a2.png" class="w-[45%] lg:w-[55%] dramatic-physics-shadow">
+                                <span class="font-serif text-[#3D332B] text-[13px] lg:text-[15px] tracking-[0.3em] mb-6 lg:mb-12 uppercase">Furnace</span>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/6uh9/855X691/%E8%B5%84%E6%BA%90_7.png" class="w-[60%] lg:w-[65%] mix-blend-multiply opacity-60 mb-6 lg:mb-12">
+                                <div class="w-[1px] h-8 lg:h-16 border-l border-dashed border-[#DCD5C6] mb-6 lg:mb-12"></div>
+                                <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/tVUs/3000X1907/6f8d3587392e92bb27462322bcfc50a2.png" class="w-[85%] lg:w-[55%] dramatic-physics-shadow">
                             </div>
                         </div>
                     </div>
@@ -1153,7 +1178,7 @@
                     </div>
                 </div>
 
-                <!-- 4. 画册感错落实拍图 -->
+                <!-- 【修改点】画册感错落实拍图：非对称排布叠放 -->
                 <div id="physical-touch-gallery" class="relative w-full z-10 pb-32 lg:pb-64 overflow-hidden -mt-[1px]">
                     <div class="absolute inset-0 z-0">
                         <div class="absolute inset-0 bg-[#F4F1EB]"></div>
@@ -1166,21 +1191,21 @@
                         </div>
                     </div>
                     
-                    <div class="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10 reveal pt-16 lg:pt-32 flex flex-col md:flex-row items-center gap-12 lg:gap-24">
-                        <!-- 左侧：方构图 -->
-                        <div class="w-full md:w-[55%] flex flex-col">
+                    <div class="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10 reveal pt-16 lg:pt-32 flex flex-col md:flex-row items-start lg:items-center gap-16 lg:gap-24">
+                        <!-- 左侧：方构图，占比略大 -->
+                        <div class="w-[90%] md:w-[55%] flex flex-col mx-auto md:mx-0">
                             <div class="w-full aspect-square rounded-sm overflow-hidden shadow-2xl group cursor-pointer">
                                 <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/suqy/1024X728/904fee50fa1745a2237ebf5ca43c44b9.jpg" class="w-full h-full object-cover transition-all duration-[4s] group-hover:scale-[1.05]">
                             </div>
                             <p class="text-[9px] lg:text-[10px] text-[#8A8175] tracking-[0.4em] mt-6 lg:mt-8 font-serif italic uppercase">Light & Shadow — 01</p>
                         </div>
 
-                        <!-- 右侧：长构图 -->
-                        <div class="w-full md:w-[45%] flex flex-col md:mt-64">
+                        <!-- 右侧：长构图，占比略小且向上交错叠放 -->
+                        <div class="w-[80%] md:w-[45%] flex flex-col ml-auto mt-[-40px] md:mt-64 relative z-20">
                             <div class="w-full aspect-[3/4] rounded-sm overflow-hidden shadow-2xl group cursor-pointer">
                                 <img src="https://test.fukit.cn/autoupload/f/14LTBz5zG8tpztazrqv1xlaMnouKReN3spbQz7x5YEI/20260313/2LXU/1179X1476/42421f4f285ec3243e95466461d8dd7a.jpg" class="w-full h-full object-cover transition-all duration-[4s] group-hover:scale-[1.05]">
                             </div>
-                            <p class="text-[9px] lg:text-[10px] text-[#8A8175] tracking-[0.4em] mt-6 lg:mt-8 font-serif italic md:text-right uppercase">Texture Details — 02</p>
+                            <p class="text-[9px] lg:text-[10px] text-[#8A8175] tracking-[0.4em] mt-6 lg:mt-8 font-serif italic text-left md:text-right uppercase">Texture Details — 02</p>
                         </div>
                     </div>
                 </div>
