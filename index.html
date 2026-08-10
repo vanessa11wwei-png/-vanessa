@@ -182,11 +182,31 @@
           .branding-module-wrapper img[alt="水印右"] { display: none !important; }
 
           /* ============================================================
-             第二轮修复：导航栏溢出 + 首屏文字重叠 + 板块间大片空白
+             第二轮修复：导航栏、排版与视觉细节优化
              ============================================================ */
 
-          /* ---- 悬浮导航栏：手机上文字会被截断，直接隐藏，不影响内容浏览 ---- */
-          #main-nav { display: none !important; }
+          /* ---- 悬浮导航栏：手机改为底部悬浮，允许横向滚动 ---- */
+          #main-nav {
+              display: flex !important;
+              top: auto !important;
+              bottom: 24px !important;
+              width: 90% !important;
+              max-width: 400px;
+              padding: 12px 20px !important;
+              border-radius: 24px !important;
+              background: rgba(255, 255, 255, 0.95) !important;
+          }
+          #main-nav > div {
+              gap: 16px !important;
+              overflow-x: auto;
+              -webkit-overflow-scrolling: touch;
+              padding-bottom: 2px;
+          }
+          #main-nav > div::-webkit-scrollbar { display: none; }
+          #main-nav .nav-link { font-size: 11px !important; white-space: nowrap; }
+
+          /* ---- 碎暖小图排版：手机端两两并排 ---- */
+          .w-\[20\%\] { width: 45% !important; margin-bottom: 16px; }
 
           /* ---- 首屏 HERO：原设计靠绝对定位+百分比叠放做杂志排版，
                  窄屏上会导致标题与副标题文字重叠，改为正常纵向堆叠 ---- */
@@ -243,6 +263,84 @@
 
           /* ---- AIGC 光影中国板块顶部间距，桌面 240px 起步偏大 ---- */
           .project-02-wrapper { margin-top: 40px !important; padding-top: 80px !important; }
+
+          /* ============================================================
+             第三轮优化：资深设计师级排版微调 (留白、比例、字号节奏)
+             ============================================================ */
+
+          /* ---- 🍎 文字比例与节奏 (Typography Scale) ---- */
+          /* 收敛过大的桌面端标题字号，杜绝手机端单字断行 */
+          h2 { font-size: 32px !important; line-height: 1.3 !important; }
+          h3 { font-size: 22px !important; line-height: 1.4 !important; }
+          .serif-title.text-\[56px\], .serif-title.text-\[72px\], h2.text-\[80px\] { font-size: 36px !important; }
+          #hero-title span.text-\[64px\], #hero-title span.md\:text-\[96px\] { font-size: 44px !important; }
+          /* Footer 底部巨型字体限制 */
+          footer h2.text-\[64px\] { font-size: 48px !important; margin-bottom: 16px !important; }
+          footer p.text-\[20px\] { font-size: 16px !important; }
+
+          /* ---- 🌬️ 呼吸感与间距压缩 (Spacing & Rhythm) ---- */
+          /* 将桌面端巨型间距统一压缩，防止视线断层 */
+          .pt-32, .pt-40, .pt-48 { padding-top: 56px !important; }
+          .pb-32, .pb-40, .pb-48, .pb-56, .pb-64, .pb-80 { padding-bottom: 56px !important; }
+          .mt-32, .mt-40, .mt-48, .mt-56 { margin-top: 56px !important; }
+          .mb-32, .mb-40, .mb-48, .mb-56 { margin-bottom: 48px !important; }
+          .gap-12, .gap-16, .gap-20, .gap-24 { gap: 24px !important; }
+
+          /* ---- 📦 卡片与容器内边距精细化 ---- */
+          .px-8, .px-10, .px-\[40px\], .px-\[80px\] { padding-left: 20px !important; padding-right: 20px !important; }
+          .challenge-card, .bg-white.rounded-\[32px\], .bg-\[\#F8F8FA\].rounded-\[32px\], .strategy-card {
+              padding: 24px !important;
+              border-radius: 20px !important;
+          }
+
+          /* ---- 📱 各大板块特定结构修正 ---- */
+
+          /* [About Me] 个人信息区换行处理与左对齐 */
+          #about > div:first-child { flex-direction: column !important; align-items: flex-start !important; }
+          #about .lg\:w-1\/2.flex.flex-col.items-end { align-items: flex-start !important; width: 100% !important; mt: 32px !important; }
+          #about .w-\[280px\] { width: 100% !important; max-width: 320px; align-self: center; margin-bottom: 16px !important; }
+          #about .text-right { text-align: left !important; }
+
+          /* [Project 01] 项目成果：双列硬挤改单列，增强阅读连贯性 */
+          #project-01 .grid.grid-cols-2 { grid-template-columns: 1fr !important; gap: 40px !important; }
+
+          /* [Project 02] 布局精调 */
+          /* 底部数据 4列改2列 */
+          .project-02-wrapper .grid-cols-4 { grid-template-columns: repeat(2, 1fr) !important; gap: 32px 24px !important; }
+          /* AI 训练流程图：加入横向溢出防崩溃遮罩 */
+          .strategy-card .flex.items-center.gap-4.opacity-80 { 
+              overflow-x: auto; 
+              padding-bottom: 12px; 
+              -webkit-overflow-scrolling: touch; 
+              width: 100%; 
+              justify-content: flex-start; 
+              mask-image: linear-gradient(to right, black 85%, transparent 100%); 
+              -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+          }
+          .strategy-card .flex.items-center.gap-4.opacity-80::-webkit-scrollbar { display: none; }
+
+          /* [Project 03] 侨智大会数据列修正 */
+          .p3-container .grid.divide-x { border: none !important; grid-template-columns: repeat(2, 1fr) !important; gap: 32px 16px !important; }
+          .p3-container .divide-x > div { border-right: none !important; }
+
+          /* [Project 04] Branding 板块微调 */
+          /* 碎暖：小圆点色卡防止横向挤压 */
+          .branding-module-wrapper .flex.gap-10 { gap: 16px !important; flex-wrap: wrap; justify-content: center; }
+          /* 碎暖：取消右侧图片的负边距越界 */
+          .col-emotional .w-\[120\%\] { width: 100% !important; margin-left: 0 !important; }
+          /* 结构解剖图 (Spoon/Handle) 从 4列平滑转为 2列 */
+          .branding-module-wrapper .grid-cols-2.lg\:grid-cols-4 { gap: 40px 24px !important; }
+          .branding-module-wrapper .border-l.border-dashed { height: 24px !important; margin-bottom: 16px !important; }
+
+          /* [Footer] 底部排版左对齐归一化 */
+          footer .grid-cols-1.md\:grid-cols-2 { gap: 48px !important; }
+          footer .items-end { align-items: flex-start !important; }
+          footer .justify-end { justify-content: flex-start !important; }
+        }
+
+        /* ---- 触屏设备优化：禁用自定义鼠标圆圈，避免卡顿 ---- */
+        @media (pointer: coarse) {
+            .cursor-glass { display: none !important; }
         }
 
     </style>
@@ -1115,10 +1213,10 @@
                 <!-- ================= 03 熔语 ================= -->
                 <div class="w-full reveal relative z-10 pb-40">
                     <div class="flex flex-col items-center text-center max-w-[800px] mx-auto px-8 mb-48">
-                        <span class="text-[10px] text-[#A69C92] tracking-[0.6em] uppercase mb-8 font-mono uppercase uppercase uppercase uppercase uppercase uppercase uppercase">03 / Branding Identity</span>
-                        <h3 class="serif-title text-[56px] md:text-[72px] text-[#3D332B] tracking-[0.1em] mb-4 uppercase uppercase uppercase uppercase uppercase">熔 语</h3>
+                        <span class="text-[10px] text-[#A69C92] tracking-[0.6em] uppercase mb-8 font-mono">03 / Branding Identity</span>
+                        <h3 class="serif-title text-[56px] md:text-[72px] text-[#3D332B] tracking-[0.1em] mb-4">熔 语</h3>
                         <span class="font-serif italic text-[#A69C92] text-[16px] tracking-[0.3em] mb-12 block">Molten Whisper</span>
-                        <p class="text-[#7A6F66] text-[14px] md:text-[15px] leading-[2.6] font-light max-w-[600px] tracking-wide tracking-wide tracking-wide tracking-wide font-medium tracking-wide">历史的温度，凝固于方寸之间。「熔语」融合古典火漆文化符号与极简几何，重塑拆封的仪式感，让每一次印记，都成为情感与美学的私语。</p>
+                        <p class="text-[#7A6F66] text-[14px] md:text-[15px] leading-[2.6] font-light max-w-[600px] tracking-wide font-medium">历史的温度，凝固于方寸之间。「熔语」融合古典火漆文化符号与极简几何，重塑拆封的仪式感，让每一次印记，都成为情感与美学的私语。</p>
                         <div class="flex gap-10 mt-20 items-center justify-center">
                             <div class="w-4 h-4 rounded-full bg-[#65776C] shadow-inner transition-transform duration-500 hover:scale-125 cursor-pointer"></div>
                             <div class="w-4 h-4 rounded-full bg-[#5F673C] shadow-inner transition-transform duration-500 hover:scale-125 cursor-pointer"></div>
@@ -1134,22 +1232,22 @@
                     </div>
 
                     <div class="relative z-10 w-full max-w-[1200px] mx-auto reveal mb-48 px-10">
-                        <div class="text-center mb-32 flex flex-col items-center uppercase uppercase uppercase"><span class="text-[12px] font-serif italic text-[#8A8175] tracking-[0.4em] block mb-6 font-mono font-serif italic text-[#8A8175] tracking-[0.4em] block mb-6 uppercase">Structural Anatomy</span><div class="w-[1px] h-12 bg-[#A69C92]/30"></div></div>
+                        <div class="text-center mb-32 flex flex-col items-center uppercase"><span class="text-[12px] font-serif italic text-[#8A8175] tracking-[0.4em] block mb-6 font-mono">Structural Anatomy</span><div class="w-[1px] h-12 bg-[#A69C92]/30"></div></div>
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10">
-                            <div class="flex flex-col items-center group relative"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase uppercase uppercase font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Spoon</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/h9kJ/465X625/%E8%B5%84%E6%BA%90_4.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/B1a2/1902X2737/f47c07e84a3e42b41922ec76cbe70f29.png" class="w-[60%] dramatic-physics-shadow uppercase uppercase uppercase"></div>
-                            <div class="flex flex-col items-center group relative mt-12 lg:mt-0 uppercase uppercase uppercase uppercase"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase uppercase font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Handle</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/NvAA/466X625/%E8%B5%84%E6%BA%90_5.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/k7LR/1902X2737/5ea2eae19ba9be6cd8b4e48d21f00dcb.png" class="w-[50%] dramatic-physics-shadow uppercase uppercase uppercase"></div>
-                            <div class="flex flex-col items-center group relative uppercase uppercase uppercase uppercase"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase uppercase font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Pellets</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/a3rR/465X625/%E8%B5%84%E6%BA%90_6.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Nqn1/1902X2737/60e65c163e0a68e5f8dd597671283d62.png" class="w-[60%] dramatic-physics-shadow uppercase uppercase uppercase"></div>
-                            <div class="flex flex-col items-center group relative mt-12 lg:mt-0 uppercase uppercase uppercase uppercase uppercase uppercase"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase uppercase uppercase font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Furnace</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/6uh9/855X691/%E8%B5%84%E6%BA%90_7.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/tVUs/3000X1907/6f8d3587392e92bb27462322bcfc50a2.png" class="w-[55%] dramatic-physics-shadow uppercase uppercase uppercase uppercase uppercase"></div>
+                            <div class="flex flex-col items-center group relative"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Spoon</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/h9kJ/465X625/%E8%B5%84%E6%BA%90_4.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/B1a2/1902X2737/f47c07e84a3e42b41922ec76cbe70f29.png" class="w-[60%] dramatic-physics-shadow"></div>
+                            <div class="flex flex-col items-center group relative mt-12 lg:mt-0"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Handle</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/NvAA/466X625/%E8%B5%84%E6%BA%90_5.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/k7LR/1902X2737/5ea2eae19ba9be6cd8b4e48d21f00dcb.png" class="w-[50%] dramatic-physics-shadow"></div>
+                            <div class="flex flex-col items-center group relative"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Pellets</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/a3rR/465X625/%E8%B5%84%E6%BA%90_6.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Nqn1/1902X2737/60e65c163e0a68e5f8dd597671283d62.png" class="w-[60%] dramatic-physics-shadow"></div>
+                            <div class="flex flex-col items-center group relative mt-12 lg:mt-0"><span class="font-serif text-[#3D332B] text-[15px] tracking-[0.3em] mb-12 uppercase">Furnace</span><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/6uh9/855X691/%E8%B5%84%E6%BA%90_7.png" class="w-[65%] mix-blend-multiply opacity-60 mb-12"><div class="w-[1px] h-16 border-l border-dashed border-[#DCD5C6] mb-12"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/tVUs/3000X1907/6f8d3587392e92bb27462322bcfc50a2.png" class="w-[55%] dramatic-physics-shadow"></div>
                         </div>
                     </div>
 
-                    <div class="relative z-20 w-full max-w-[1320px] mx-auto reveal mt-32 uppercase uppercase uppercase uppercase uppercase uppercase"><div class="flex justify-between items-end pb-4 px-10"><span class="text-[14px] font-bold text-[#8A8175] tracking-[0.4em] uppercase font-serif italic italic font-serif uppercase">Physical Touch</span><span class="text-[13px] font-bold text-[#8A8175] tracking-widest uppercase uppercase">实拍质感</span></div></div>
+                    <div class="relative z-20 w-full max-w-[1320px] mx-auto reveal mt-32 uppercase"><div class="flex justify-between items-end pb-4 px-10"><span class="text-[14px] font-bold text-[#8A8175] tracking-[0.4em] font-serif italic uppercase">Physical Touch</span><span class="text-[13px] font-bold text-[#8A8175] tracking-widest uppercase">实拍质感</span></div></div>
                 </div>
 
                 <!-- 4. 画册感错落实拍图 -->
                 <div id="physical-touch-gallery" class="relative w-full z-10 pb-64 overflow-hidden -mt-[1px]">
                     <div class="absolute inset-0 z-0"><div class="absolute inset-0 bg-[#F4F1EB]"></div><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/yT9h/3500X2300/%E3%80%90%E4%B8%80%E5%B0%96%E8%AE%BE%E8%AE%A1%E3%80%91_%E5%A4%9A%E5%BD%A9%E9%A3%8E%E6%A0%BC_%2817%29_%E6%8B%B7%E8%B4%9D.jpg" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-[0.25]"></div>
-                    <div class="relative z-20 max-w-[1400px] mx-auto px-10"><div class="max-w-[1320px] mx-auto relative w-full uppercase uppercase uppercase uppercase uppercase"><div class="w-full h-[1px] bg-[#A69C92]/40"></div><div class="absolute top-1/2 right-[18%] -translate-y-1/2 w-[20px] h-[20px] rounded-full border border-[#A69C92]/40 bg-[#F4F1EB] shadow-inner"></div></div></div>
+                    <div class="relative z-20 max-w-[1400px] mx-auto px-10"><div class="max-w-[1320px] mx-auto relative w-full uppercase"><div class="w-full h-[1px] bg-[#A69C92]/40"></div><div class="absolute top-1/2 right-[18%] -translate-y-1/2 w-[20px] h-[20px] rounded-full border border-[#A69C92]/40 bg-[#F4F1EB] shadow-inner"></div></div></div>
                     
                     <div class="relative z-10 max-w-[1100px] mx-auto px-10 reveal pt-32 flex flex-col md:flex-row items-center gap-24">
                         <!-- 左侧：方构图 -->
@@ -1157,7 +1255,7 @@
                             <div class="w-full aspect-square rounded-sm overflow-hidden shadow-2xl group cursor-pointer">
                                 <img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/suqy/1024X728/904fee50fa1745a2237ebf5ca43c44b9.jpg" class="w-full h-full object-cover transition-all duration-[4s] group-hover:scale-[1.05]">
                             </div>
-                            <p class="text-[10px] text-[#8A8175] tracking-[0.4em] mt-8 font-serif italic uppercase uppercase font-serif">Light & Shadow — 01</p>
+                            <p class="text-[10px] text-[#8A8175] tracking-[0.4em] mt-8 font-serif italic uppercase">Light & Shadow — 01</p>
                         </div>
 
                         <!-- 右侧：长构图 -->
@@ -1165,7 +1263,7 @@
                             <div class="w-full aspect-[3/4] rounded-sm overflow-hidden shadow-2xl group cursor-pointer">
                                 <img src="https://test.fukit.cn/autoupload/f/14LTBz5zG8tpztazrqv1xlaMnouKReN3spbQz7x5YEI/20260313/2LXU/1179X1476/42421f4f285ec3243e95466461d8dd7a.jpg" class="w-full h-full object-cover transition-all duration-[4s] group-hover:scale-[1.05]">
                             </div>
-                            <p class="text-[10px] text-[#8A8175] tracking-[0.4em] mt-8 font-serif italic text-right uppercase uppercase font-serif">Texture Details — 02</p>
+                            <p class="text-[10px] text-[#8A8175] tracking-[0.4em] mt-8 font-serif italic text-right uppercase">Texture Details — 02</p>
                         </div>
                     </div>
                 </div>
@@ -1173,30 +1271,30 @@
         </div>
     </main>
 
-    <footer id="contact" class="pt-40 pb-16 bg-[#0F0F0F] text-[#EAE5D9] flex flex-col relative z-[90] overflow-hidden uppercase uppercase uppercase uppercase uppercase uppercase">
-        <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-screen uppercase uppercase uppercase uppercase uppercase uppercase uppercase" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
-        <div class="max-w-[1240px] mx-auto w-full px-12 md:px-16 relative z-10 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-            <div class="flex flex-col items-start mb-32 border-b border-white/5 pb-24 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                <h2 class="text-[64px] md:text-[100px] font-black tracking-tight uppercase leading-none mb-10">Let's Talk.</h2>
-                <p class="serif-title text-[20px] md:text-[28px] font-light text-[#A69C92] italic tracking-[0.1em] uppercase uppercase uppercase uppercase uppercase">Let's build something meaningful together.</p>
+    <footer id="contact" class="pt-20 md:pt-40 pb-16 bg-[#0F0F0F] text-[#EAE5D9] flex flex-col relative z-[90] overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-screen" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
+        <div class="max-w-[1240px] mx-auto w-full px-12 md:px-16 relative z-10">
+            <div class="flex flex-col items-start mb-16 md:mb-32 border-b border-white/5 pb-16 md:pb-24">
+                <h2 class="text-[48px] md:text-[100px] font-black tracking-tight uppercase leading-none mb-6 md:mb-10">Let's Talk.</h2>
+                <p class="serif-title text-[16px] md:text-[28px] font-light text-[#A69C92] italic tracking-[0.1em]">Let's build something meaningful together.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-24 w-full mb-32 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                <div class="flex flex-col gap-10 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                    <div><p class="text-[24px] font-medium tracking-[0.5em] mb-4 uppercase uppercase uppercase uppercase uppercase">曹丹薇</p><p class="text-[12px] font-mono tracking-[0.5em] text-[#A69C92] uppercase">Cao Danwei</p></div>
-                    <div class="flex flex-col gap-4 uppercase uppercase uppercase uppercase uppercase uppercase uppercase"><span class="text-[11px] font-bold tracking-[0.3em] uppercase text-[#EAE5D9]">UI/UX & AIGC & Brand Designer</span><span class="text-[11px] font-mono tracking-[0.3em] text-[#A69C92] uppercase">Based in Fuzhou, CN</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 w-full mb-20 md:mb-32">
+                <div class="flex flex-col gap-6 md:gap-10">
+                    <div><p class="text-[24px] font-medium tracking-[0.5em] mb-4 uppercase">曹丹薇</p><p class="text-[12px] font-mono tracking-[0.5em] text-[#A69C92] uppercase">Cao Danwei</p></div>
+                    <div class="flex flex-col gap-4"><span class="text-[11px] font-bold tracking-[0.3em] uppercase text-[#EAE5D9]">UI/UX & AIGC & Brand Designer</span><span class="text-[11px] font-mono tracking-[0.3em] text-[#A69C92] uppercase">Based in Fuzhou, CN</span></div>
                 </div>
-                <div class="flex flex-col md:flex-row items-start md:items-end justify-start md:justify-end gap-20 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                    <div class="flex flex-col gap-10 uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                        <div class="flex flex-col gap-4 uppercase uppercase uppercase uppercase uppercase uppercase uppercase"><span class="text-[10px] font-bold tracking-[0.5em] text-[#A69C92] uppercase uppercase uppercase uppercase">Email</span><a href="mailto:1216583161@qq.com" class="text-[15px] font-mono tracking-widest hover:text-white transition-colors">1216583161@qq.com</a></div>
-                        <div class="flex flex-col gap-4 uppercase uppercase uppercase uppercase uppercase uppercase uppercase"><span class="text-[10px] font-bold tracking-[0.5em] text-[#A69C92] uppercase uppercase uppercase uppercase">Phone</span><span class="text-[15px] font-mono tracking-widest uppercase uppercase uppercase uppercase uppercase">199 5922 8825</span></div>
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-start md:justify-end gap-12 md:gap-20">
+                    <div class="flex flex-col gap-8 md:gap-10">
+                        <div class="flex flex-col gap-4"><span class="text-[10px] font-bold tracking-[0.5em] text-[#A69C92] uppercase">Email</span><a href="mailto:1216583161@qq.com" class="text-[15px] font-mono tracking-widest hover:text-white transition-colors">1216583161@qq.com</a></div>
+                        <div class="flex flex-col gap-4"><span class="text-[10px] font-bold tracking-[0.5em] text-[#A69C92] uppercase">Phone</span><span class="text-[15px] font-mono tracking-widest">199 5922 8825</span></div>
                     </div>
-                    <div class="flex flex-col items-center gap-6 uppercase uppercase uppercase uppercase uppercase uppercase uppercase uppercase">
-                        <div class="w-24 h-24 bg-white/[0.03] p-2 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-3 uppercase uppercase uppercase uppercase uppercase uppercase uppercase uppercase"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Auvd/939X909/8ab9476efd3a523709cbcfad5a6910bf.jpg" class="w-full h-full object-contain rounded-lg mix-blend-screen opacity-90 uppercase uppercase uppercase uppercase uppercase"></div>
-                        <span class="text-[9px] font-bold tracking-[0.5em] text-[#A69C92] uppercase uppercase uppercase uppercase">WeChat</span>
+                    <div class="flex flex-col items-center gap-6">
+                        <div class="w-24 h-24 bg-white/[0.03] p-2 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-3"><img src="https://img.51shazhu.com/autoupload/eM6a3cQXrOskbUUzJ2eIcdiO_OyvX7mIgxFBfDMDErs/20260311/Auvd/939X909/8ab9476efd3a523709cbcfad5a6910bf.jpg" class="w-full h-full object-contain rounded-lg mix-blend-screen opacity-90"></div>
+                        <span class="text-[9px] font-bold tracking-[0.5em] text-[#A69C92] uppercase">WeChat</span>
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center w-full border-t border-white/5 pt-10 text-[9px] text-white/20 tracking-[0.4em] font-mono uppercase"><span>© 2026 CAO DANWEI.</span><span>ALL RIGHTS RESERVED.</span></div>
+            <div class="flex flex-col md:flex-row justify-between items-center w-full border-t border-white/5 pt-10 pb-10 md:pb-0 gap-4 md:gap-0 text-[9px] text-white/20 tracking-[0.4em] font-mono uppercase text-center"><span>© 2026 CAO DANWEI.</span><span>ALL RIGHTS RESERVED.</span></div>
         </div>
     </footer>
 
